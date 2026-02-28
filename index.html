@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EmpowerHer — Education, Skills & Employment</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF6F0;
+    --rust: #C94A2A;
+    --gold: #E8A830;
+    --deep: #1A1208;
+    --muted: #7A6A55;
+    --light-rust: #F2D5CB;
+    --sage: #4A7C59;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--deep);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(250,246,240,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,74,42,0.15);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900; font-size: 1.5rem;
+    color: var(--rust);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--gold); }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav ul a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s; }
+  nav ul a:hover { color: var(--rust); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -10%; right: -5%;
+    width: 55%; height: 120%;
+    background: radial-gradient(ellipse at center, var(--light-rust) 0%, transparent 70%);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .hero-text { position: relative; z-index: 2; }
+  .sdg-badge {
+    display: inline-block;
+    background: var(--rust); color: white;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+    padding: 0.35rem 1rem; border-radius: 100px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero h1 em { font-style: italic; color: var(--rust); }
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1.1rem; line-height: 1.7; color: var(--muted);
+    max-width: 480px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; margin-top: 2.5rem;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--rust); color: white;
+    padding: 0.85rem 2rem; border-radius: 4px;
+    text-decoration: none; font-weight: 500; font-size: 0.95rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(201,74,42,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,74,42,0.4); }
+  .btn-secondary {
+    padding: 0.85rem 2rem; border-radius: 4px;
+    text-decoration: none; font-weight: 500; font-size: 0.95rem;
+    border: 1.5px solid var(--deep); color: var(--deep);
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: var(--deep); color: var(--cream); }
+
+  /* hero visual */
+  .hero-visual {
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-circle {
+    width: 420px; height: 420px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rust) 0%, var(--gold) 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(201,74,42,0.3);
+  }
+  .hero-circle-inner {
+    width: 360px; height: 360px; border-radius: 50%;
+    background: var(--cream);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 2rem;
+  }
+  .hero-circle-inner .big-stat {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem; font-weight: 900; color: var(--rust);
+    line-height: 1;
+  }
+  .hero-circle-inner p { font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; max-width: 200px; }
+  .hero-tags {
+    position: absolute;
+    display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .hero-tags.left { left: -60px; }
+  .hero-tags.right { right: -60px; }
+  .tag-pill {
+    background: white;
+    padding: 0.5rem 1rem; border-radius: 100px;
+    font-size: 0.8rem; font-weight: 500;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    white-space: nowrap;
+  }
+
+  /* ── PROBLEM SECTION ── */
+  .section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em;
+    color: var(--rust); text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700; line-height: 1.15;
+    letter-spacing: -0.02em; max-width: 600px;
+    margin-bottom: 3rem;
+  }
+
+  .barriers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .barrier-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    border-left: 4px solid var(--rust);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .barrier-card::after {
+    content: '';
+    position: absolute; bottom: 0; right: 0;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, var(--light-rust), transparent);
+    opacity: 0.5;
+  }
+  .barrier-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+  .barrier-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .barrier-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .barrier-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── SOLUTION ── */
+  .solution { background: var(--deep); color: var(--cream); }
+  .solution .section-label { color: var(--gold); }
+  .solution h2 { color: var(--cream); }
+  .pathway {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; position: relative; margin-top: 1rem;
+  }
+  .pathway::before {
+    content: '';
+    position: absolute; top: 48px; left: 10%; right: 10%; height: 2px;
+    background: linear-gradient(90deg, var(--rust), var(--gold));
+    z-index: 0;
+  }
+  .step {
+    text-align: center; padding: 1.5rem; position: relative; z-index: 1;
+  }
+  .step-num {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rust), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900; color: white;
+    margin: 0 auto 1.2rem;
+    box-shadow: 0 4px 20px rgba(201,74,42,0.5);
+  }
+  .step h3 { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .step p { font-size: 0.85rem; color: rgba(250,246,240,0.65); line-height: 1.6; }
+
+  /* ── IMPACT ── */
+  .impact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+  }
+  .impact-stats { display: flex; flex-direction: column; gap: 2rem; }
+  .impact-stat {
+    display: flex; align-items: flex-start; gap: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(201,74,42,0.15);
+  }
+  .impact-stat:last-child { border-bottom: none; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900; color: var(--rust);
+    line-height: 1; min-width: 100px;
+  }
+  .stat-info h4 { font-size: 1rem; font-weight: 500; margin-bottom: 0.3rem; }
+  .stat-info p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  .impact-text .section-label { margin-top: 0; }
+  .impact-text p { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.2rem; }
+  .sdg-badges { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+  .sdg-chip {
+    padding: 0.6rem 1.2rem; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .sdg-chip.sdg4 { background: #DDEEFF; color: #1A5276; }
+  .sdg-chip.sdg5 { background: #FFE8E0; color: #922B21; }
+
+  /* ── QUOTE BANNER ── */
+  .quote-banner {
+    background: linear-gradient(135deg, var(--rust) 0%, #8B2500 100%);
+    padding: 5rem 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .quote-banner::before {
+    content: '"';
+    position: absolute; top: -2rem; left: 3rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 18rem; color: rgba(255,255,255,0.05);
+    line-height: 1; pointer-events: none;
+  }
+  .quote-banner blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400; font-style: italic;
+    color: white; max-width: 800px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.4; position: relative; z-index: 1;
+  }
+  .quote-banner cite { color: rgba(255,255,255,0.6); font-size: 0.9rem; font-style: normal; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--deep); color: rgba(250,246,240,0.5);
+    padding: 3rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer .logo { color: var(--gold); }
+  footer p { font-size: 0.85rem; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 2rem 3rem; }
+    .hero-visual { display: none; }
+    .barriers-grid { grid-template-columns: 1fr; }
+    .pathway { grid-template-columns: 1fr 1fr; }
+    .pathway::before { display: none; }
+    .impact-grid { grid-template-columns: 1fr; }
+    .section { padding: 4rem 2rem; }
+    footer { flex-direction: column; text-align: center; padding: 2rem; }
+    .quote-banner { padding: 3rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Empower<span>Her</span></div>
+  <ul>
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#solution">Our Solution</a></li>
+    <li><a href="#impact">Impact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="sdg-badge">SDG-5 · Gender Equality</div>
+    <h1>Learn. Skill.<br><em>Rise.</em></h1>
+    <p class="hero-sub">EmpowerHer is a unified platform designed to support women through education, skills training, certification, and employment — bridging the gap from potential to possibility.</p>
+    <div class="hero-cta">
+      <a href="#solution" class="btn-primary">Explore the Platform</a>
+      <a href="#impact" class="btn-secondary">See the Impact</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-circle">
+      <div class="hero-tags left">
+        <div class="tag-pill">📚 Education</div>
+        <div class="tag-pill">🎓 Certification</div>
+      </div>
+      <div class="hero-circle-inner">
+        <div class="big-stat">1 in 4</div>
+        <p>Women in India participate in the formal workforce</p>
+      </div>
+      <div class="hero-tags right">
+        <div class="tag-pill">💼 Employment</div>
+        <div class="tag-pill">🌱 Skills</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section" id="problem">
+  <p class="section-label reveal">The Barriers We Break</p>
+  <h2 class="reveal">Women face real, systemic obstacles every day</h2>
+  <div class="barriers-grid">
+    <div class="barrier-card reveal">
+      <div class="barrier-icon">📉</div>
+      <h3>Low Workforce Participation</h3>
+      <p>Significantly fewer women join the workforce compared to men, limiting economic independence and family prosperity.</p>
+    </div>
+    <div class="barrier-card reveal">
+      <div class="barrier-icon">🏫</div>
+      <h3>Early School Dropout</h3>
+      <p>Poverty, household duties, and early marriage force many girls to leave school before completing their education.</p>
+    </div>
+    <div class="barrier-card reveal">
+      <div class="barrier-icon">🚌</div>
+      <h3>Mobility & Safety Issues</h3>
+      <p>Travelling for education or employment remains unsafe and inaccessible for many women in India.</p>
+    </div>
+    <div class="barrier-card reveal">
+      <div class="barrier-icon">🔄</div>
+      <h3>Limited Reskilling</h3>
+      <p>Women returning from career breaks have few pathways to learn new, market-relevant skills for modern jobs.</p>
+    </div>
+    <div class="barrier-card reveal">
+      <div class="barrier-icon">🔌</div>
+      <h3>Skill–Job Mismatch</h3>
+      <p>Existing skills often don't align with available job opportunities, leaving capable women unemployed.</p>
+    </div>
+    <div class="barrier-card reveal">
+      <div class="barrier-icon">🏛️</div>
+      <h3>Social Norms & Traditions</h3>
+      <p>Deep-rooted cultural norms discourage women from working or pursuing independence outside the household.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="section solution" id="solution">
+  <p class="section-label reveal">Our Approach</p>
+  <h2 class="reveal">A clear, proven journey from education to employment</h2>
+  <div class="pathway">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <h3>Learn</h3>
+      <p>Accessible, flexible education modules designed to fit around every woman's life and schedule.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <h3>Skill</h3>
+      <p>Practical, job-oriented skills training matched to real market demands and modern industries.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <h3>Certify</h3>
+      <p>Recognized certifications that validate competence and build professional credibility.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <h3>Work</h3>
+      <p>Direct employment connections, mentorship networks, and career pathways that last.</p>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="section" id="impact">
+  <div class="impact-grid">
+    <div class="impact-stats">
+      <div class="impact-stat reveal">
+        <div class="stat-num">↑</div>
+        <div class="stat-info">
+          <h4>Workforce Participation</h4>
+          <p>When women work, families earn more and communities thrive — driving economic growth from the grassroots up.</p>
+        </div>
+      </div>
+      <div class="impact-stat reveal">
+        <div class="stat-num">♀</div>
+        <div class="stat-info">
+          <h4>Social Transformation</h4>
+          <p>EmpowerHer promotes equality and independence, reshaping social norms one woman at a time.</p>
+        </div>
+      </div>
+      <div class="impact-stat reveal">
+        <div class="stat-num">🌍</div>
+        <div class="stat-info">
+          <h4>Aligned with Global Goals</h4>
+          <p>Supporting the United Nations Sustainable Development Goals for quality education and gender equality.</p>
+        </div>
+      </div>
+    </div>
+    <div class="impact-text reveal">
+      <p class="section-label">Why It Matters</p>
+      <h2>Transforming lives & communities</h2>
+      <p>EmpowerHer's impact goes beyond individual women — it ripples outward into families, communities, and the nation as a whole. Economic independence for women means stronger households, better-educated children, and a more resilient society.</p>
+      <p>By addressing the root causes of gender inequality in education and employment, EmpowerHer creates systemic, lasting change.</p>
+      <div class="sdg-badges">
+        <div class="sdg-chip sdg4">📘 SDG 4: Quality Education</div>
+        <div class="sdg-chip sdg5">🚺 SDG 5: Gender Equality</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BANNER -->
+<div class="quote-banner">
+  <blockquote>"Together, we can empower every woman to reach her full potential and create a stronger, more equal society."</blockquote>
+  <cite>— EmpowerHer Mission Statement</cite>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Empower<span>Her</span></div>
+  <p>A GIC Project · SDG-5: Gender Equality · India</p>
+  <p>Education · Skills · Certification · Employment</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
