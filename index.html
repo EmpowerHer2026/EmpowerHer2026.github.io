@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EmpowerHer — Education, Skills & Employment</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --cream: #FAF6F0;
@@ -14,142 +15,83 @@
     --muted: #7A6A55;
     --light-rust: #F2D5CB;
     --sage: #4A7C59;
+    --white: #ffffff;
+    --border: rgba(201,74,42,0.15);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--deep);
-    overflow-x: hidden;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--deep); overflow-x: hidden; }
 
   /* ── NAV ── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
     display: flex; justify-content: space-between; align-items: center;
     padding: 1.2rem 4rem;
-    background: rgba(250,246,240,0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(201,74,42,0.15);
+    background: rgba(250,246,240,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
   }
+  nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
   .logo {
     font-family: 'Playfair Display', serif;
     font-weight: 900; font-size: 1.5rem;
-    color: var(--rust);
-    letter-spacing: -0.02em;
+    color: var(--rust); letter-spacing: -0.02em;
+    cursor: pointer;
   }
   .logo span { color: var(--gold); }
-  nav ul { list-style: none; display: flex; gap: 2.5rem; }
-  nav ul a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s; }
-  nav ul a:hover { color: var(--rust); }
+  nav ul { list-style: none; display: flex; gap: 0.5rem; align-items: center; }
+  nav ul li a, nav ul li button.nav-link {
+    text-decoration: none; color: var(--muted); font-size: 0.88rem;
+    font-weight: 500; letter-spacing: 0.04em;
+    transition: color 0.2s; background: none; border: none;
+    cursor: pointer; padding: 0.5rem 0.9rem; border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  nav ul li a:hover, nav ul li button.nav-link:hover { color: var(--rust); background: rgba(201,74,42,0.06); }
+  nav ul li a.active, nav ul li button.nav-link.active { color: var(--rust); background: rgba(201,74,42,0.1); }
+  .nav-cta {
+    background: var(--rust) !important; color: white !important;
+    padding: 0.5rem 1.2rem !important; border-radius: 6px !important;
+    box-shadow: 0 2px 12px rgba(201,74,42,0.3);
+  }
+  .nav-cta:hover { background: #b03d20 !important; }
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 8rem 4rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; top: -10%; right: -5%;
-    width: 55%; height: 120%;
-    background: radial-gradient(ellipse at center, var(--light-rust) 0%, transparent 70%);
-    opacity: 0.6;
-    pointer-events: none;
-  }
-  .hero-text { position: relative; z-index: 2; }
-  .sdg-badge {
-    display: inline-block;
-    background: var(--rust); color: white;
-    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
-    padding: 0.35rem 1rem; border-radius: 100px;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s ease both;
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    font-weight: 900;
-    line-height: 1.0;
-    letter-spacing: -0.03em;
-    animation: fadeUp 0.7s 0.1s ease both;
-  }
-  .hero h1 em { font-style: italic; color: var(--rust); }
-  .hero-sub {
-    margin-top: 1.5rem;
-    font-size: 1.1rem; line-height: 1.7; color: var(--muted);
-    max-width: 480px;
-    animation: fadeUp 0.7s 0.2s ease both;
-  }
-  .hero-cta {
-    display: flex; gap: 1rem; margin-top: 2.5rem;
-    animation: fadeUp 0.7s 0.3s ease both;
-  }
+  /* ── PAGES ── */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ── BUTTONS ── */
   .btn-primary {
     background: var(--rust); color: white;
-    padding: 0.85rem 2rem; border-radius: 4px;
-    text-decoration: none; font-weight: 500; font-size: 0.95rem;
+    padding: 0.85rem 2rem; border-radius: 6px;
+    text-decoration: none; font-weight: 600; font-size: 0.95rem;
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 4px 20px rgba(201,74,42,0.3);
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    display: inline-block;
   }
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,74,42,0.4); }
   .btn-secondary {
-    padding: 0.85rem 2rem; border-radius: 4px;
+    padding: 0.85rem 2rem; border-radius: 6px;
     text-decoration: none; font-weight: 500; font-size: 0.95rem;
     border: 1.5px solid var(--deep); color: var(--deep);
-    transition: background 0.2s;
+    transition: background 0.2s; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; background: none;
+    display: inline-block;
   }
   .btn-secondary:hover { background: var(--deep); color: var(--cream); }
+  .btn-outline {
+    padding: 0.6rem 1.4rem; border-radius: 6px;
+    border: 1.5px solid var(--rust); color: var(--rust);
+    font-weight: 500; font-size: 0.88rem; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; background: none;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { background: var(--rust); color: white; }
 
-  /* hero visual */
-  .hero-visual {
-    display: flex; align-items: center; justify-content: center;
-    position: relative; z-index: 2;
-    animation: fadeUp 0.8s 0.2s ease both;
-  }
-  .hero-circle {
-    width: 420px; height: 420px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--rust) 0%, var(--gold) 100%);
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    box-shadow: 0 40px 80px rgba(201,74,42,0.3);
-  }
-  .hero-circle-inner {
-    width: 360px; height: 360px; border-radius: 50%;
-    background: var(--cream);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center; padding: 2rem;
-  }
-  .hero-circle-inner .big-stat {
-    font-family: 'Playfair Display', serif;
-    font-size: 4rem; font-weight: 900; color: var(--rust);
-    line-height: 1;
-  }
-  .hero-circle-inner p { font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; max-width: 200px; }
-  .hero-tags {
-    position: absolute;
-    display: flex; flex-direction: column; gap: 0.6rem;
-  }
-  .hero-tags.left { left: -60px; }
-  .hero-tags.right { right: -60px; }
-  .tag-pill {
-    background: white;
-    padding: 0.5rem 1rem; border-radius: 100px;
-    font-size: 0.8rem; font-weight: 500;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    white-space: nowrap;
-  }
-
-  /* ── PROBLEM SECTION ── */
+  /* ── SECTION COMMON ── */
   .section { padding: 6rem 4rem; }
   .section-label {
     font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em;
@@ -157,117 +99,126 @@
   }
   .section h2 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    font-weight: 700; line-height: 1.15;
-    letter-spacing: -0.02em; max-width: 600px;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+    line-height: 1.15; letter-spacing: -0.02em; max-width: 600px;
     margin-bottom: 3rem;
   }
 
-  .barriers-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-  .barrier-card {
-    background: white;
-    border-radius: 12px;
-    padding: 2rem;
-    border-left: 4px solid var(--rust);
-    transition: transform 0.2s, box-shadow 0.2s;
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 8rem 4rem 4rem;
     position: relative; overflow: hidden;
   }
-  .barrier-card::after {
-    content: '';
-    position: absolute; bottom: 0; right: 0;
-    width: 80px; height: 80px;
-    background: radial-gradient(circle, var(--light-rust), transparent);
-    opacity: 0.5;
+  .hero::before {
+    content: ''; position: absolute; top: -10%; right: -5%;
+    width: 55%; height: 120%;
+    background: radial-gradient(ellipse at center, var(--light-rust) 0%, transparent 70%);
+    opacity: 0.6; pointer-events: none;
   }
-  .barrier-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
-  .barrier-icon { font-size: 2rem; margin-bottom: 1rem; }
-  .barrier-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
-  .barrier-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
-
-  /* ── SOLUTION ── */
-  .solution { background: var(--deep); color: var(--cream); }
-  .solution .section-label { color: var(--gold); }
-  .solution h2 { color: var(--cream); }
-  .pathway {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 0; position: relative; margin-top: 1rem;
+  .hero-text { position: relative; z-index: 2; }
+  .sdg-badge {
+    display: inline-block; background: var(--rust); color: white;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+    padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
   }
-  .pathway::before {
-    content: '';
-    position: absolute; top: 48px; left: 10%; right: 10%; height: 2px;
-    background: linear-gradient(90deg, var(--rust), var(--gold));
-    z-index: 0;
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 900;
+    line-height: 1.0; letter-spacing: -0.03em;
+    animation: fadeUp 0.7s 0.1s ease both;
   }
-  .step {
-    text-align: center; padding: 1.5rem; position: relative; z-index: 1;
+  .hero h1 em { font-style: italic; color: var(--rust); }
+  .hero-sub {
+    margin-top: 1.5rem; font-size: 1.1rem; line-height: 1.7;
+    color: var(--muted); max-width: 480px;
+    animation: fadeUp 0.7s 0.2s ease both;
   }
-  .step-num {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--rust), var(--gold));
+  .hero-cta {
+    display: flex; gap: 1rem; margin-top: 2.5rem;
+    animation: fadeUp 0.7s 0.3s ease both; flex-wrap: wrap;
+  }
+  .hero-visual {
     display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 2; animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-circle {
+    width: 380px; height: 380px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rust) 0%, var(--gold) 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; box-shadow: 0 40px 80px rgba(201,74,42,0.3);
+  }
+  .hero-circle-inner {
+    width: 320px; height: 320px; border-radius: 50%;
+    background: var(--cream); display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 2rem;
+  }
+  .hero-circle-inner .big-stat {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; font-weight: 900; color: white;
-    margin: 0 auto 1.2rem;
-    box-shadow: 0 4px 20px rgba(201,74,42,0.5);
+    font-size: 3.5rem; font-weight: 900; color: var(--rust); line-height: 1;
   }
-  .step h3 { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 0.5rem; }
-  .step p { font-size: 0.85rem; color: rgba(250,246,240,0.65); line-height: 1.6; }
+  .hero-circle-inner p { font-size: 0.88rem; color: var(--muted); margin-top: 0.5rem; max-width: 180px; }
+  .hero-tags { position: absolute; display: flex; flex-direction: column; gap: 0.6rem; }
+  .hero-tags.left { left: -70px; }
+  .hero-tags.right { right: -70px; }
+  .tag-pill {
+    background: white; padding: 0.5rem 1rem; border-radius: 100px;
+    font-size: 0.8rem; font-weight: 500;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1); white-space: nowrap;
+  }
 
-  /* ── IMPACT ── */
-  .impact-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 4rem; align-items: center;
+  /* ── FEATURE CARDS (home) ── */
+  .features-section { background: var(--deep); padding: 5rem 4rem; }
+  .features-section .section-label { color: var(--gold); }
+  .features-section h2 { color: var(--cream); }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .feature-card {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 2rem;
+    transition: transform 0.2s, background 0.2s; cursor: pointer;
+    position: relative; overflow: hidden;
   }
-  .impact-stats { display: flex; flex-direction: column; gap: 2rem; }
-  .impact-stat {
-    display: flex; align-items: flex-start; gap: 1.5rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(201,74,42,0.15);
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--rust), var(--gold));
   }
-  .impact-stat:last-child { border-bottom: none; }
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem; font-weight: 900; color: var(--rust);
-    line-height: 1; min-width: 100px;
+  .feature-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.08); }
+  .feature-icon { font-size: 2.5rem; margin-bottom: 1.2rem; }
+  .feature-card h3 {
+    font-family: 'Playfair Display', serif; color: var(--gold);
+    font-size: 1.3rem; margin-bottom: 0.7rem;
   }
-  .stat-info h4 { font-size: 1rem; font-weight: 500; margin-bottom: 0.3rem; }
-  .stat-info p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-
-  .impact-text .section-label { margin-top: 0; }
-  .impact-text p { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.2rem; }
-  .sdg-badges { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
-  .sdg-chip {
-    padding: 0.6rem 1.2rem; border-radius: 8px;
-    font-size: 0.85rem; font-weight: 600;
-    display: flex; align-items: center; gap: 0.5rem;
+  .feature-card p { font-size: 0.9rem; color: rgba(250,246,240,0.65); line-height: 1.7; }
+  .feature-card .feature-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    color: var(--rust); font-size: 0.88rem; font-weight: 600;
+    margin-top: 1.2rem; text-decoration: none;
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: gap 0.2s;
   }
-  .sdg-chip.sdg4 { background: #DDEEFF; color: #1A5276; }
-  .sdg-chip.sdg5 { background: #FFE8E0; color: #922B21; }
+  .feature-card .feature-link:hover { gap: 0.7rem; }
 
   /* ── QUOTE BANNER ── */
   .quote-banner {
-    background: linear-gradient(135deg, var(--rust) 0%, #8B2500 100%);
-    padding: 5rem 4rem;
-    text-align: center;
-    position: relative; overflow: hidden;
+    background: var(--rust); padding: 5rem 4rem;
+    text-align: center; position: relative; overflow: hidden;
   }
   .quote-banner::before {
-    content: '"';
-    position: absolute; top: -2rem; left: 3rem;
+    content: '"'; position: absolute; top: -3rem; left: 2rem;
     font-family: 'Playfair Display', serif;
     font-size: 18rem; color: rgba(255,255,255,0.05);
-    line-height: 1; pointer-events: none;
+    line-height: 1;
   }
   .quote-banner blockquote {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
     font-weight: 400; font-style: italic;
-    color: white; max-width: 800px;
-    margin: 0 auto 1.5rem;
+    color: white; max-width: 800px; margin: 0 auto 1.5rem;
     line-height: 1.4; position: relative; z-index: 1;
   }
   .quote-banner cite { color: rgba(255,255,255,0.6); font-size: 0.9rem; font-style: normal; }
@@ -275,11 +226,12 @@
   /* ── FOOTER ── */
   footer {
     background: var(--deep); color: rgba(250,246,240,0.5);
-    padding: 3rem 4rem;
-    display: flex; justify-content: space-between; align-items: center;
+    padding: 3rem 4rem; display: flex;
+    justify-content: space-between; align-items: center;
     flex-wrap: wrap; gap: 1rem;
   }
-  footer .logo { color: var(--gold); }
+  footer .logo { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; }
+  footer .logo span { color: var(--rust); }
   footer p { font-size: 0.85rem; }
 
   /* ── ANIMATIONS ── */
@@ -287,199 +239,1110 @@
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  .reveal {
-    opacity: 0; transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
   }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  @media (max-width: 900px) {
-    nav { padding: 1rem 2rem; }
-    nav ul { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 7rem 2rem 3rem; }
+  /* ══════════════════════════════════════
+     LEARNING HUB PAGE
+  ══════════════════════════════════════ */
+  .page-header {
+    padding: 7rem 4rem 3rem;
+    background: linear-gradient(135deg, var(--deep) 0%, #2d1f10 100%);
+    position: relative; overflow: hidden;
+  }
+  .page-header::after {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 40%; height: 100%;
+    background: radial-gradient(ellipse at right, rgba(201,74,42,0.3), transparent 70%);
+  }
+  .page-header-inner { position: relative; z-index: 2; }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900;
+    color: var(--cream); letter-spacing: -0.03em;
+    line-height: 1.1; margin-bottom: 1rem;
+  }
+  .page-header h1 em { color: var(--gold); font-style: italic; }
+  .page-header p { color: rgba(250,246,240,0.7); font-size: 1.05rem; max-width: 500px; line-height: 1.7; }
+
+  /* Filter bar */
+  .filter-bar {
+    padding: 1.5rem 4rem;
+    background: white; border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap;
+    position: sticky; top: 65px; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .filter-label { font-size: 0.8rem; font-weight: 600; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-right: 0.5rem; }
+  .filter-chip {
+    padding: 0.45rem 1rem; border-radius: 100px;
+    border: 1.5px solid rgba(0,0,0,0.12); background: none;
+    font-size: 0.85rem; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    color: var(--muted); transition: all 0.2s; font-weight: 500;
+  }
+  .filter-chip:hover { border-color: var(--rust); color: var(--rust); }
+  .filter-chip.active { background: var(--rust); border-color: var(--rust); color: white; }
+
+  /* Course grid */
+  .courses-section { padding: 3rem 4rem 5rem; }
+  .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .course-card {
+    background: white; border-radius: 16px;
+    overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .course-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
+  .course-banner {
+    height: 140px; display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem; position: relative;
+  }
+  .course-body { padding: 1.5rem; }
+  .course-tag {
+    display: inline-block; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.7rem;
+    border-radius: 100px; margin-bottom: 0.8rem;
+  }
+  .tag-digital { background: #E8F4FD; color: #1A73B8; }
+  .tag-business { background: #FFF3E0; color: #E65C00; }
+  .tag-vocational { background: #E8F5E9; color: #2E7D32; }
+  .tag-health { background: #FCE4EC; color: #AD1457; }
+  .tag-finance { background: #EDE7F6; color: #5E35B1; }
+  .course-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.5rem; line-height: 1.3; }
+  .course-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem; }
+  .course-meta { display: flex; gap: 1rem; font-size: 0.78rem; color: var(--muted); margin-bottom: 1.2rem; }
+  .course-meta span { display: flex; align-items: center; gap: 0.3rem; }
+  .course-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 1rem; }
+  .course-level { font-size: 0.78rem; font-weight: 600; color: var(--muted); }
+  .progress-bar-wrap { height: 4px; background: rgba(0,0,0,0.08); border-radius: 2px; margin-bottom: 0.5rem; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, var(--rust), var(--gold)); border-radius: 2px; transition: width 0.5s ease; }
+  .progress-label { font-size: 0.75rem; color: var(--muted); }
+
+  /* Course Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(26,18,8,0.7); backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease;
+  }
+  .modal-overlay.open { display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  .modal {
+    background: var(--cream); border-radius: 20px;
+    max-width: 700px; width: 100%; max-height: 90vh;
+    overflow-y: auto; animation: fadeUp 0.3s ease;
+  }
+  .modal-header {
+    padding: 2.5rem 2.5rem 0;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .modal-close {
+    background: none; border: none; font-size: 1.5rem;
+    cursor: pointer; color: var(--muted); padding: 0.3rem;
+    line-height: 1; transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--rust); }
+  .modal-body { padding: 1.5rem 2.5rem 2.5rem; }
+  .modal-body h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem; }
+  .modal-body .desc { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+  .module-list { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; }
+  .module-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.9rem 1.2rem; border-radius: 10px;
+    background: white; border: 1px solid rgba(0,0,0,0.07);
+  }
+  .module-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rust), var(--gold));
+    color: white; font-size: 0.8rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .module-item .mod-title { font-weight: 500; font-size: 0.9rem; }
+  .module-item .mod-dur { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+  .module-item.completed .module-num { background: var(--sage); }
+  .module-item.completed .mod-title { text-decoration: line-through; color: var(--muted); }
+  .enroll-section { background: white; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .enroll-info { flex: 1; }
+  .enroll-info h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+  .enroll-info p { font-size: 0.85rem; color: var(--muted); margin-top: 0.3rem; }
+
+  /* ══════════════════════════════════════
+     SKILLS ASSESSMENT PAGE
+  ══════════════════════════════════════ */
+  .assessment-container { max-width: 760px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+  .assessment-progress {
+    background: white; border-radius: 12px; padding: 1.5rem;
+    margin-bottom: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .assessment-progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+  .assessment-progress-top span { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+  .assessment-progress-top strong { color: var(--rust); }
+  .progress-track { height: 8px; background: rgba(0,0,0,0.08); border-radius: 4px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--rust), var(--gold)); border-radius: 4px; transition: width 0.4s ease; }
+
+  .question-card {
+    background: white; border-radius: 16px; padding: 2.5rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08); animation: fadeUp 0.4s ease;
+  }
+  .question-category {
+    display: inline-block; font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.8rem;
+    border-radius: 100px; background: var(--light-rust); color: var(--rust);
+    margin-bottom: 1.2rem;
+  }
+  .question-text { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; line-height: 1.4; margin-bottom: 2rem; }
+  .options-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+  .option-btn {
+    padding: 1rem 1.4rem; border-radius: 10px;
+    border: 2px solid rgba(0,0,0,0.1); background: white;
+    text-align: left; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; transition: all 0.2s; display: flex; align-items: center; gap: 1rem;
+  }
+  .option-btn:hover { border-color: var(--rust); background: rgba(201,74,42,0.04); }
+  .option-btn.selected { border-color: var(--rust); background: rgba(201,74,42,0.08); color: var(--rust); font-weight: 500; }
+  .option-btn.correct { border-color: var(--sage); background: rgba(74,124,89,0.08); color: var(--sage); }
+  .option-btn.wrong { border-color: #c0392b; background: rgba(192,57,43,0.06); color: #c0392b; }
+  .option-letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(0,0,0,0.06); display: flex; align-items: center;
+    justify-content: center; font-size: 0.8rem; font-weight: 700;
+    flex-shrink: 0; transition: all 0.2s;
+  }
+  .option-btn.selected .option-letter { background: var(--rust); color: white; }
+  .option-btn.correct .option-letter { background: var(--sage); color: white; }
+  .option-btn.wrong .option-letter { background: #c0392b; color: white; }
+
+  .question-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; }
+  .question-nav .hint { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+
+  /* Results */
+  .results-card {
+    background: white; border-radius: 20px; padding: 3rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1); text-align: center;
+    animation: fadeUp 0.5s ease;
+  }
+  .results-score-ring {
+    width: 160px; height: 160px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rust), var(--gold));
+    margin: 0 auto 2rem; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    box-shadow: 0 8px 32px rgba(201,74,42,0.35);
+  }
+  .results-score-ring .score { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: white; line-height: 1; }
+  .results-score-ring .score-label { font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 0.2rem; }
+  .results-card h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 0.7rem; }
+  .results-card > p { color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem; }
+  .skill-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; text-align: left; }
+  .skill-item { padding: 1rem; background: var(--cream); border-radius: 10px; }
+  .skill-item-label { font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .skill-item-bar { height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; margin-bottom: 0.4rem; }
+  .skill-item-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--rust), var(--gold)); }
+  .skill-item-pct { font-size: 0.85rem; font-weight: 600; color: var(--rust); }
+  .recommended-courses h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 1rem; text-align: left; }
+  .rec-course-chip {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 1rem; border-radius: 100px;
+    border: 1.5px solid var(--rust); color: var(--rust);
+    font-size: 0.85rem; font-weight: 500; margin: 0.3rem; cursor: pointer;
+    transition: all 0.2s; background: none; font-family: 'DM Sans', sans-serif;
+  }
+  .rec-course-chip:hover { background: var(--rust); color: white; }
+  .results-actions { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+
+  /* ══════════════════════════════════════
+     CERTIFICATION PAGE
+  ══════════════════════════════════════ */
+  .certifications-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding: 3rem 4rem 5rem; }
+  .cert-card {
+    background: white; border-radius: 16px;
+    overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cert-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+  .cert-header {
+    padding: 2rem; background: linear-gradient(135deg, var(--deep), #2d1f10);
+    position: relative; overflow: hidden;
+  }
+  .cert-header::after {
+    content: ''; position: absolute; bottom: -20px; right: -20px;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: rgba(201,74,42,0.3);
+  }
+  .cert-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+  .cert-header h3 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.15rem; margin-bottom: 0.3rem; }
+  .cert-header p { font-size: 0.8rem; color: rgba(250,246,240,0.6); }
+  .cert-body { padding: 1.5rem; }
+  .cert-progress-section { margin-bottom: 1.2rem; }
+  .cert-progress-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .cert-requirements { margin-bottom: 1.2rem; }
+  .cert-requirements h4 { font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.7rem; }
+  .req-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; margin-bottom: 0.5rem; }
+  .req-check { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.7rem; }
+  .req-check.done { background: var(--sage); color: white; }
+  .req-check.pending { background: rgba(0,0,0,0.1); color: var(--muted); }
+  .cert-footer { padding: 1.2rem 1.5rem; border-top: 1px solid rgba(0,0,0,0.06); }
+
+  /* Certificate display */
+  .certificate-preview {
+    background: linear-gradient(135deg, #fffdf8, #fff8ee);
+    border: 3px solid var(--gold); border-radius: 16px;
+    padding: 3rem; text-align: center; position: relative;
+    overflow: hidden; margin: 2rem 4rem;
+  }
+  .certificate-preview::before, .certificate-preview::after {
+    content: ''; position: absolute;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,168,48,0.15), transparent);
+  }
+  .certificate-preview::before { top: -30px; left: -30px; }
+  .certificate-preview::after { bottom: -30px; right: -30px; }
+  .cert-watermark {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif; font-size: 8rem; font-weight: 900;
+    color: rgba(201,74,42,0.04); white-space: nowrap; pointer-events: none;
+    letter-spacing: -0.03em;
+  }
+  .cert-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: var(--rust); margin-bottom: 0.3rem; }
+  .cert-logo span { color: var(--gold); }
+  .cert-subtitle { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+  .cert-title-text { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .cert-recipient { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-style: italic; color: var(--deep); margin-bottom: 1.5rem; }
+  .cert-award-text { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .cert-course-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--rust); margin-bottom: 2rem; }
+  .cert-divider { width: 60px; height: 2px; background: linear-gradient(90deg, var(--rust), var(--gold)); margin: 0 auto 2rem; }
+  .cert-footer-row { display: flex; justify-content: space-between; align-items: flex-end; }
+  .cert-footer-col { text-align: center; }
+  .cert-sig { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--deep); }
+  .cert-sig-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.3rem; border-top: 1px solid var(--muted); padding-top: 0.3rem; }
+  .cert-seal { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--rust), var(--gold)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 16px rgba(201,74,42,0.4); }
+  .cert-actions { display: flex; gap: 1rem; justify-content: center; padding: 1rem 0 3rem; }
+
+  /* My Certs */
+  .my-certs-section { padding: 0 4rem 4rem; }
+  .my-certs-section h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1.5rem; }
+  .my-cert-item {
+    background: white; border-radius: 12px; padding: 1.2rem 1.5rem;
+    border: 1px solid rgba(0,0,0,0.07); margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 1.2rem;
+    transition: box-shadow 0.2s;
+  }
+  .my-cert-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .cert-badge-icon { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, var(--rust), var(--gold)); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+  .my-cert-info { flex: 1; }
+  .my-cert-info h4 { font-weight: 600; font-size: 0.95rem; }
+  .my-cert-info p { font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; }
+  .cert-status-badge { padding: 0.3rem 0.8rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; }
+  .status-earned { background: rgba(74,124,89,0.12); color: var(--sage); }
+  .status-progress { background: rgba(232,168,48,0.15); color: #b8860b; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .courses-grid { grid-template-columns: repeat(2, 1fr); }
+    .certifications-grid { grid-template-columns: repeat(2, 1fr); }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { gap: 0; }
+    nav ul li a, nav ul li button.nav-link { padding: 0.4rem 0.5rem; font-size: 0.8rem; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
     .hero-visual { display: none; }
-    .barriers-grid { grid-template-columns: 1fr; }
-    .pathway { grid-template-columns: 1fr 1fr; }
-    .pathway::before { display: none; }
-    .impact-grid { grid-template-columns: 1fr; }
-    .section { padding: 4rem 2rem; }
-    footer { flex-direction: column; text-align: center; padding: 2rem; }
-    .quote-banner { padding: 3rem 2rem; }
+    .section { padding: 4rem 1.5rem; }
+    .filter-bar { padding: 1rem 1.5rem; }
+    .courses-section { padding: 2rem 1.5rem 4rem; }
+    .courses-grid { grid-template-columns: 1fr; }
+    .certifications-grid { grid-template-columns: 1fr; padding: 2rem 1.5rem 4rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .page-header { padding: 7rem 1.5rem 2.5rem; }
+    .assessment-container { padding: 1.5rem 1.5rem 4rem; }
+    .skill-breakdown { grid-template-columns: 1fr; }
+    .certificate-preview { margin: 1rem 1.5rem; padding: 2rem 1.5rem; }
+    .my-certs-section { padding: 0 1.5rem 3rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+    .hero-cta { flex-direction: column; }
+    .cert-footer-row { flex-direction: column; gap: 1.5rem; align-items: center; }
   }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
-  <div class="logo">Empower<span>Her</span></div>
+<nav id="mainNav">
+  <div class="logo" onclick="showPage('home')">Empower<span>Her</span></div>
   <ul>
-    <li><a href="#problem">The Problem</a></li>
-    <li><a href="#solution">Our Solution</a></li>
-    <li><a href="#impact">Impact</a></li>
+    <li><button class="nav-link active" onclick="showPage('home')" id="nav-home">Home</button></li>
+    <li><button class="nav-link" onclick="showPage('learning')" id="nav-learning">📚 Learning Hub</button></li>
+    <li><button class="nav-link" onclick="showPage('assessment')" id="nav-assessment">🎯 Skills Assessment</button></li>
+    <li><button class="nav-link" onclick="showPage('certification')" id="nav-certification">🏆 Certifications</button></li>
+    <li><button class="nav-link nav-cta" onclick="showPage('assessment')">Get Started</button></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-text">
-    <div class="sdg-badge">SDG-5 · Gender Equality</div>
-    <h1>Learn. Skill.<br><em>Rise.</em></h1>
-    <p class="hero-sub">EmpowerHer is a unified platform designed to support women through education, skills training, certification, and employment — bridging the gap from potential to possibility.</p>
-    <div class="hero-cta">
-      <a href="#solution" class="btn-primary">Explore the Platform</a>
-      <a href="#impact" class="btn-secondary">See the Impact</a>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-circle">
-      <div class="hero-tags left">
-        <div class="tag-pill">📚 Education</div>
-        <div class="tag-pill">🎓 Certification</div>
-      </div>
-      <div class="hero-circle-inner">
-        <div class="big-stat">1 in 4</div>
-        <p>Women in India participate in the formal workforce</p>
-      </div>
-      <div class="hero-tags right">
-        <div class="tag-pill">💼 Employment</div>
-        <div class="tag-pill">🌱 Skills</div>
+<!-- ══════════════ HOME PAGE ══════════════ -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-text">
+      <div class="sdg-badge">SDG-5 · Gender Equality</div>
+      <h1>Learn. Skill.<br><em>Rise.</em></h1>
+      <p class="hero-sub">EmpowerHer is a unified platform supporting women through education, skills training, certification, and employment — bridging the gap from potential to possibility.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="showPage('learning')">Explore Courses</button>
+        <button class="btn-secondary" onclick="showPage('assessment')">Take Skills Assessment</button>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- PROBLEM -->
-<section class="section" id="problem">
-  <p class="section-label reveal">The Barriers We Break</p>
-  <h2 class="reveal">Women face real, systemic obstacles every day</h2>
-  <div class="barriers-grid">
-    <div class="barrier-card reveal">
-      <div class="barrier-icon">📉</div>
-      <h3>Low Workforce Participation</h3>
-      <p>Significantly fewer women join the workforce compared to men, limiting economic independence and family prosperity.</p>
-    </div>
-    <div class="barrier-card reveal">
-      <div class="barrier-icon">🏫</div>
-      <h3>Early School Dropout</h3>
-      <p>Poverty, household duties, and early marriage force many girls to leave school before completing their education.</p>
-    </div>
-    <div class="barrier-card reveal">
-      <div class="barrier-icon">🚌</div>
-      <h3>Mobility & Safety Issues</h3>
-      <p>Travelling for education or employment remains unsafe and inaccessible for many women in India.</p>
-    </div>
-    <div class="barrier-card reveal">
-      <div class="barrier-icon">🔄</div>
-      <h3>Limited Reskilling</h3>
-      <p>Women returning from career breaks have few pathways to learn new, market-relevant skills for modern jobs.</p>
-    </div>
-    <div class="barrier-card reveal">
-      <div class="barrier-icon">🔌</div>
-      <h3>Skill–Job Mismatch</h3>
-      <p>Existing skills often don't align with available job opportunities, leaving capable women unemployed.</p>
-    </div>
-    <div class="barrier-card reveal">
-      <div class="barrier-icon">🏛️</div>
-      <h3>Social Norms & Traditions</h3>
-      <p>Deep-rooted cultural norms discourage women from working or pursuing independence outside the household.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SOLUTION -->
-<section class="section solution" id="solution">
-  <p class="section-label reveal">Our Approach</p>
-  <h2 class="reveal">A clear, proven journey from education to employment</h2>
-  <div class="pathway">
-    <div class="step reveal">
-      <div class="step-num">1</div>
-      <h3>Learn</h3>
-      <p>Accessible, flexible education modules designed to fit around every woman's life and schedule.</p>
-    </div>
-    <div class="step reveal">
-      <div class="step-num">2</div>
-      <h3>Skill</h3>
-      <p>Practical, job-oriented skills training matched to real market demands and modern industries.</p>
-    </div>
-    <div class="step reveal">
-      <div class="step-num">3</div>
-      <h3>Certify</h3>
-      <p>Recognized certifications that validate competence and build professional credibility.</p>
-    </div>
-    <div class="step reveal">
-      <div class="step-num">4</div>
-      <h3>Work</h3>
-      <p>Direct employment connections, mentorship networks, and career pathways that last.</p>
-    </div>
-  </div>
-</section>
-
-<!-- IMPACT -->
-<section class="section" id="impact">
-  <div class="impact-grid">
-    <div class="impact-stats">
-      <div class="impact-stat reveal">
-        <div class="stat-num">↑</div>
-        <div class="stat-info">
-          <h4>Workforce Participation</h4>
-          <p>When women work, families earn more and communities thrive — driving economic growth from the grassroots up.</p>
+    <div class="hero-visual">
+      <div class="hero-circle">
+        <div class="hero-tags left">
+          <div class="tag-pill">📚 Education</div>
+          <div class="tag-pill">🎓 Certification</div>
         </div>
-      </div>
-      <div class="impact-stat reveal">
-        <div class="stat-num">♀</div>
-        <div class="stat-info">
-          <h4>Social Transformation</h4>
-          <p>EmpowerHer promotes equality and independence, reshaping social norms one woman at a time.</p>
+        <div class="hero-circle-inner">
+          <div class="big-stat">1 in 4</div>
+          <p>Women in India participate in the formal workforce</p>
         </div>
-      </div>
-      <div class="impact-stat reveal">
-        <div class="stat-num">🌍</div>
-        <div class="stat-info">
-          <h4>Aligned with Global Goals</h4>
-          <p>Supporting the United Nations Sustainable Development Goals for quality education and gender equality.</p>
+        <div class="hero-tags right">
+          <div class="tag-pill">💼 Employment</div>
+          <div class="tag-pill">🌱 Skills</div>
         </div>
       </div>
     </div>
-    <div class="impact-text reveal">
-      <p class="section-label">Why It Matters</p>
-      <h2>Transforming lives & communities</h2>
-      <p>EmpowerHer's impact goes beyond individual women — it ripples outward into families, communities, and the nation as a whole. Economic independence for women means stronger households, better-educated children, and a more resilient society.</p>
-      <p>By addressing the root causes of gender inequality in education and employment, EmpowerHer creates systemic, lasting change.</p>
-      <div class="sdg-badges">
-        <div class="sdg-chip sdg4">📘 SDG 4: Quality Education</div>
-        <div class="sdg-chip sdg5">🚺 SDG 5: Gender Equality</div>
+  </section>
+
+  <section class="features-section">
+    <p class="section-label">Platform Features</p>
+    <h2 style="color:var(--cream); margin-bottom:2.5rem;">Everything you need to grow</h2>
+    <div class="features-grid">
+      <div class="feature-card" onclick="showPage('learning')">
+        <div class="feature-icon">📚</div>
+        <h3>Learning Hub</h3>
+        <p>Access flexible, bite-sized courses across digital skills, business, vocational training, and more — designed to fit around your life.</p>
+        <button class="feature-link">Explore Courses →</button>
+      </div>
+      <div class="feature-card" onclick="showPage('assessment')">
+        <div class="feature-icon">🎯</div>
+        <h3>Skills Assessment</h3>
+        <p>Take our personalized skills quiz to discover where you are today, identify your strengths, and get a custom learning pathway.</p>
+        <button class="feature-link">Start Assessment →</button>
+      </div>
+      <div class="feature-card" onclick="showPage('certification')">
+        <div class="feature-icon">🏆</div>
+        <h3>Certification System</h3>
+        <p>Earn recognized certificates as you complete courses. Share credentials with employers and build a verified professional profile.</p>
+        <button class="feature-link">View Certificates →</button>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- QUOTE BANNER -->
-<div class="quote-banner">
-  <blockquote>"Together, we can empower every woman to reach her full potential and create a stronger, more equal society."</blockquote>
-  <cite>— EmpowerHer Mission Statement</cite>
+  <div class="quote-banner">
+    <blockquote>"When women are empowered, families thrive, communities grow, and nations rise."</blockquote>
+    <cite>— EmpowerHer Mission</cite>
+  </div>
+
+  <footer>
+    <div class="logo">Empower<span>Her</span></div>
+    <p>A GIC Project · SDG-5: Gender Equality · India</p>
+    <p>Education · Skills · Certification · Employment</p>
+  </footer>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="logo">Empower<span>Her</span></div>
-  <p>A GIC Project · SDG-5: Gender Equality · India</p>
-  <p>Education · Skills · Certification · Employment</p>
-</footer>
+<!-- ══════════════ LEARNING HUB ══════════════ -->
+<div id="page-learning" class="page">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <p class="section-label" style="color:var(--gold);">Your Growth Journey</p>
+      <h1>The Learning <em>Hub</em></h1>
+      <p>Discover courses designed to fit around your life — flexible, practical, and taught in plain language.</p>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-chip active" onclick="filterCourses('all', this)">All Courses</button>
+    <button class="filter-chip" onclick="filterCourses('digital', this)">💻 Digital</button>
+    <button class="filter-chip" onclick="filterCourses('business', this)">💼 Business</button>
+    <button class="filter-chip" onclick="filterCourses('vocational', this)">🔧 Vocational</button>
+    <button class="filter-chip" onclick="filterCourses('health', this)">❤️ Health</button>
+    <button class="filter-chip" onclick="filterCourses('finance', this)">💰 Finance</button>
+  </div>
+
+  <div class="courses-section">
+    <div class="courses-grid" id="coursesGrid"></div>
+  </div>
+
+  <footer>
+    <div class="logo">Empower<span>Her</span></div>
+    <p>A GIC Project · SDG-5: Gender Equality · India</p>
+    <p>Education · Skills · Certification · Employment</p>
+  </footer>
+</div>
+
+<!-- Course Modal -->
+<div class="modal-overlay" id="courseModal" onclick="closeModal(event)">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- ══════════════ SKILLS ASSESSMENT ══════════════ -->
+<div id="page-assessment" class="page">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <p class="section-label" style="color:var(--gold);">Discover Your Potential</p>
+      <h1>Skills <em>Assessment</em></h1>
+      <p>Answer 10 questions to map your existing skills and get a personalized learning pathway crafted just for you.</p>
+    </div>
+  </div>
+
+  <div class="assessment-container" id="assessmentArea"></div>
+
+  <footer>
+    <div class="logo">Empower<span>Her</span></div>
+    <p>A GIC Project · SDG-5: Gender Equality · India</p>
+    <p>Education · Skills · Certification · Employment</p>
+  </footer>
+</div>
+
+<!-- ══════════════ CERTIFICATION ══════════════ -->
+<div id="page-certification" class="page">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <p class="section-label" style="color:var(--gold);">Your Credentials</p>
+      <h1>Certification <em>System</em></h1>
+      <p>Complete courses, earn verified certificates, and showcase your skills to the world.</p>
+    </div>
+  </div>
+
+  <div id="certPreviewArea"></div>
+
+  <div style="padding: 0 4rem;" id="certGridArea">
+    <p class="section-label" style="margin-bottom:2rem;">Available Certifications</p>
+    <div class="certifications-grid" id="certGrid"></div>
+  </div>
+
+  <div class="my-certs-section" id="myCertsSection" style="margin-top:3rem;">
+    <h2>My Certificates</h2>
+    <div id="myCertsList"></div>
+  </div>
+
+  <footer style="margin-top:2rem;">
+    <div class="logo">Empower<span>Her</span></div>
+    <p>A GIC Project · SDG-5: Gender Equality · India</p>
+    <p>Education · Skills · Certification · Employment</p>
+  </footer>
+</div>
 
 <script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
+/* ═══════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════ */
+const courses = [
+  {
+    id: 1, category: 'digital', emoji: '💻',
+    bannerBg: 'linear-gradient(135deg, #1A1208, #2d1f10)',
+    title: 'Digital Literacy Foundations',
+    desc: 'Master smartphones, email, internet safety, and basic computer skills. Perfect for beginners.',
+    duration: '6 hours', lessons: 12, level: 'Beginner',
+    progress: 75,
+    modules: [
+      { title: 'Introduction to Smartphones', dur: '25 min', done: true },
+      { title: 'Using Email & WhatsApp', dur: '30 min', done: true },
+      { title: 'Internet Safety & Privacy', dur: '35 min', done: true },
+      { title: 'Google Search & Maps', dur: '30 min', done: false },
+      { title: 'Online Banking Basics', dur: '40 min', done: false },
+    ]
+  },
+  {
+    id: 2, category: 'business', emoji: '🛍️',
+    bannerBg: 'linear-gradient(135deg, #C94A2A, #E8A830)',
+    title: 'Starting Your Own Business',
+    desc: 'From idea to launch — learn how to build a small business, price your products, and find customers.',
+    duration: '10 hours', lessons: 18, level: 'Intermediate',
+    progress: 30,
+    modules: [
+      { title: 'Finding Your Business Idea', dur: '30 min', done: true },
+      { title: 'Understanding Your Customers', dur: '40 min', done: false },
+      { title: 'Pricing for Profit', dur: '35 min', done: false },
+      { title: 'Marketing Without Money', dur: '45 min', done: false },
+      { title: 'Keeping Simple Accounts', dur: '40 min', done: false },
+    ]
+  },
+  {
+    id: 3, category: 'digital', emoji: '📱',
+    bannerBg: 'linear-gradient(135deg, #4A7C59, #2d5e40)',
+    title: 'Social Media for Work',
+    desc: 'Use Instagram, Facebook, and LinkedIn to build your professional presence and grow a business.',
+    duration: '4 hours', lessons: 8, level: 'Beginner',
+    progress: 0,
+    modules: [
+      { title: 'Creating a Professional Profile', dur: '20 min', done: false },
+      { title: 'Content That Connects', dur: '30 min', done: false },
+      { title: 'Building Your Audience', dur: '35 min', done: false },
+      { title: 'Instagram for Business', dur: '40 min', done: false },
+    ]
+  },
+  {
+    id: 4, category: 'vocational', emoji: '✂️',
+    bannerBg: 'linear-gradient(135deg, #5E35B1, #9c27b0)',
+    title: 'Tailoring & Fashion Design',
+    desc: 'Learn cutting, stitching, and designing garments. Build skills for a home-based tailoring business.',
+    duration: '14 hours', lessons: 22, level: 'Beginner',
+    progress: 100,
+    modules: [
+      { title: 'Tools and Measurements', dur: '45 min', done: true },
+      { title: 'Basic Stitching Techniques', dur: '60 min', done: true },
+      { title: 'Reading a Pattern', dur: '50 min', done: true },
+      { title: 'Making a Blouse', dur: '90 min', done: true },
+      { title: 'Running Your Tailoring Business', dur: '40 min', done: true },
+    ]
+  },
+  {
+    id: 5, category: 'finance', emoji: '💰',
+    bannerBg: 'linear-gradient(135deg, #1565c0, #0288d1)',
+    title: 'Financial Independence',
+    desc: 'Understand savings, budgeting, bank accounts, loans, and government schemes designed for women.',
+    duration: '5 hours', lessons: 10, level: 'Beginner',
+    progress: 50,
+    modules: [
+      { title: 'Opening a Bank Account', dur: '20 min', done: true },
+      { title: 'Saving Strategies', dur: '30 min', done: true },
+      { title: 'Understanding Loans & Interest', dur: '35 min', done: false },
+      { title: 'Government Schemes for Women', dur: '40 min', done: false },
+      { title: 'Building Credit', dur: '30 min', done: false },
+    ]
+  },
+  {
+    id: 6, category: 'health', emoji: '❤️',
+    bannerBg: 'linear-gradient(135deg, #AD1457, #c62828)',
+    title: 'Health & Wellness Educator',
+    desc: 'Learn about nutrition, mental health, preventive care, and how to become a health champion in your community.',
+    duration: '7 hours', lessons: 14, level: 'Intermediate',
+    progress: 0,
+    modules: [
+      { title: 'Nutrition & Healthy Eating', dur: '40 min', done: false },
+      { title: 'Mental Health Awareness', dur: '45 min', done: false },
+      { title: 'Preventive Health Screenings', dur: '35 min', done: false },
+      { title: 'Maternal & Child Health', dur: '50 min', done: false },
+      { title: 'Community Health Leadership', dur: '40 min', done: false },
+    ]
+  },
+  {
+    id: 7, category: 'digital', emoji: '💻',
+    bannerBg: 'linear-gradient(135deg, #00695c, #00897b)',
+    title: 'MS Office & Google Workspace',
+    desc: 'Master Word, Excel, PowerPoint and Google Docs, Sheets, Slides for office and administrative roles.',
+    duration: '8 hours', lessons: 16, level: 'Beginner',
+    progress: 20,
+    modules: [
+      { title: 'Word Processing Basics', dur: '40 min', done: true },
+      { title: 'Formatting & Design', dur: '35 min', done: false },
+      { title: 'Spreadsheet Fundamentals', dur: '50 min', done: false },
+      { title: 'Data and Formulas', dur: '60 min', done: false },
+      { title: 'Presentations That Shine', dur: '45 min', done: false },
+    ]
+  },
+  {
+    id: 8, category: 'business', emoji: '🌿',
+    bannerBg: 'linear-gradient(135deg, #4A7C59, #8d6e3a)',
+    title: 'Agri-Business for Women',
+    desc: 'Turn farming skills into a thriving business. Covers organic farming, packaging, selling, and FPOs.',
+    duration: '9 hours', lessons: 15, level: 'Intermediate',
+    progress: 0,
+    modules: [
+      { title: 'Value-Added Farm Products', dur: '40 min', done: false },
+      { title: 'Organic Certification Basics', dur: '35 min', done: false },
+      { title: 'Selling at Markets', dur: '30 min', done: false },
+      { title: 'Farmer Producer Organizations', dur: '45 min', done: false },
+    ]
+  },
+  {
+    id: 9, category: 'vocational', emoji: '🧴',
+    bannerBg: 'linear-gradient(135deg, #e65100, #f57c00)',
+    title: 'Beauty & Wellness Professional',
+    desc: 'Comprehensive beauty training covering skincare, haircare, nail art, and setting up a salon.',
+    duration: '12 hours', lessons: 20, level: 'Beginner',
+    progress: 0,
+    modules: [
+      { title: 'Skincare Science', dur: '45 min', done: false },
+      { title: 'Hair Treatments & Styling', dur: '60 min', done: false },
+      { title: 'Nail Art Techniques', dur: '50 min', done: false },
+      { title: 'Client Management', dur: '30 min', done: false },
+      { title: 'Starting Your Salon', dur: '40 min', done: false },
+    ]
+  },
+];
+
+const assessmentQuestions = [
+  {
+    category: 'Digital Skills',
+    text: 'How comfortable are you using a smartphone for tasks like email, internet browsing, or video calls?',
+    options: ['I rarely use these features', 'I use basic features occasionally', 'I\'m comfortable with most features', 'I use advanced features confidently'],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    category: 'Financial Literacy',
+    text: 'Can you explain the difference between a savings account and a fixed deposit?',
+    options: ['I\'m not sure', 'I have a vague idea', 'I understand the basics', 'Yes, I can explain it clearly'],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    category: 'Business Skills',
+    text: 'If you were selling handmade goods, how would you decide on the price?',
+    options: ['I\'d guess a fair number', 'I\'d check what others charge', 'I\'d calculate my costs and add profit', 'I\'d analyze market demand and competition'],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    category: 'Communication',
+    text: 'How confident are you speaking or presenting in front of a small group of people?',
+    options: ['Very uncomfortable', 'Somewhat nervous', 'Fairly confident', 'Very confident'],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    category: 'Digital Skills',
+    text: 'Which of these can you do on a computer or phone? (Choose the most advanced)',
+    options: ['Turn it on and make calls', 'Use WhatsApp and browse the internet', 'Create documents or spreadsheets', 'Use multiple apps for work tasks'],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    category: 'Vocational',
+    text: 'Do you have any hands-on practical skills (cooking, sewing, crafts, farming, beauty, etc.)?',
+    options: ['None that I can think of', 'I have one or two basic skills', 'I have a few skills I use regularly', 'I have strong practical skills I could teach others'],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    category: 'Business Skills',
+    text: 'Have you ever earned money through your own work, product, or service?',
+    options: ['Never', 'Once or twice informally', 'A few times, small amounts', 'Regularly, it\'s part of my income'],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    category: 'Financial Literacy',
+    text: 'Do you currently save money regularly, even a small amount?',
+    options: ['No, I haven\'t been able to', 'Occasionally when possible', 'Yes, most months I save something', 'Yes, I have a savings goal and track it'],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    category: 'Communication',
+    text: 'How would you describe your comfort with reading and writing in English?',
+    options: ['I find it very difficult', 'I can read basic text', 'I can read and write reasonably well', 'I\'m fully comfortable with professional English'],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    category: 'Vocational',
+    text: 'What best describes your work or learning experience?',
+    options: ['No formal experience yet', 'Some school or informal training', 'Completed a course or some college', 'Have work experience or a degree'],
+    scores: [1, 2, 3, 4]
+  }
+];
+
+const certifications = [
+  {
+    id: 'cert-digital', icon: '💻',
+    title: 'Certified Digital Professional',
+    issuer: 'EmpowerHer · Digital Skills Track',
+    requirements: ['Digital Literacy Foundations', 'MS Office & Google Workspace', 'Social Media for Work'],
+    completedReqs: ['Digital Literacy Foundations'],
+    progress: 33
+  },
+  {
+    id: 'cert-business', icon: '💼',
+    title: 'Women Entrepreneur Certificate',
+    issuer: 'EmpowerHer · Business Track',
+    requirements: ['Starting Your Own Business', 'Financial Independence', 'Agri-Business for Women'],
+    completedReqs: ['Financial Independence'],
+    progress: 50
+  },
+  {
+    id: 'cert-vocational', icon: '🏅',
+    title: 'Vocational Excellence Award',
+    issuer: 'EmpowerHer · Vocational Track',
+    requirements: ['Tailoring & Fashion Design', 'Beauty & Wellness Professional'],
+    completedReqs: ['Tailoring & Fashion Design'],
+    progress: 100
+  },
+  {
+    id: 'cert-health', icon: '❤️',
+    title: 'Community Health Champion',
+    issuer: 'EmpowerHer · Health Track',
+    requirements: ['Health & Wellness Educator'],
+    completedReqs: [],
+    progress: 0
+  },
+];
+
+/* ═══════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════ */
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.getElementById('nav-' + page)?.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (page === 'learning') renderCourses('all');
+  if (page === 'assessment') initAssessment();
+  if (page === 'certification') renderCertifications();
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 30);
+});
+
+/* ═══════════════════════════════════════════════
+   LEARNING HUB
+═══════════════════════════════════════════════ */
+function renderCourses(filter) {
+  const grid = document.getElementById('coursesGrid');
+  const filtered = filter === 'all' ? courses : courses.filter(c => c.category === filter);
+  grid.innerHTML = filtered.map(c => `
+    <div class="course-card" onclick="openCourse(${c.id})">
+      <div class="course-banner" style="background:${c.bannerBg}">
+        <span style="font-size:4rem">${c.emoji}</span>
+      </div>
+      <div class="course-body">
+        <span class="course-tag tag-${c.category}">${c.category.charAt(0).toUpperCase() + c.category.slice(1)}</span>
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+        <div class="course-meta">
+          <span>⏱ ${c.duration}</span>
+          <span>📖 ${c.lessons} lessons</span>
+        </div>
+        ${c.progress > 0 ? `
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" style="width:${c.progress}%"></div>
+          </div>
+          <p class="progress-label">${c.progress === 100 ? '✅ Completed' : c.progress + '% complete'}</p>
+        ` : ''}
+        <div class="course-footer">
+          <span class="course-level">${c.level}</span>
+          <button class="btn-outline" style="font-size:0.78rem;padding:0.4rem 1rem">${c.progress === 100 ? 'Review' : c.progress > 0 ? 'Continue →' : 'Start →'}</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCourses(filter, btn) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  renderCourses(filter);
+}
+
+function openCourse(id) {
+  const c = courses.find(x => x.id === id);
+  const modal = document.getElementById('courseModal');
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-header">
+      <span class="course-tag tag-${c.category}" style="margin:0">${c.category.charAt(0).toUpperCase() + c.category.slice(1)}</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:3rem;margin-bottom:1rem;">${c.emoji}</div>
+      <h2>${c.title}</h2>
+      <p class="desc">${c.desc}</p>
+      <div class="course-meta" style="margin-bottom:1.5rem">
+        <span>⏱ ${c.duration}</span>
+        <span>📖 ${c.lessons} lessons</span>
+        <span>📊 ${c.level}</span>
+      </div>
+      ${c.progress > 0 ? `
+        <div class="progress-bar-wrap" style="margin-bottom:0.5rem">
+          <div class="progress-bar" style="width:${c.progress}%"></div>
+        </div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem">${c.progress === 100 ? '✅ Course Completed!' : c.progress + '% complete · Keep going!'}</p>
+      ` : ''}
+      <h4 style="font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:1rem;">Course Modules</h4>
+      <div class="module-list">
+        ${c.modules.map((m, i) => `
+          <div class="module-item ${m.done ? 'completed' : ''}">
+            <div class="module-num">${m.done ? '✓' : i + 1}</div>
+            <div>
+              <div class="mod-title">${m.title}</div>
+              <div class="mod-dur">${m.dur}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="enroll-section">
+        <div class="enroll-info">
+          <h4>${c.progress === 100 ? 'Course Completed!' : c.progress > 0 ? 'Continue Learning' : 'Start This Course'}</h4>
+          <p>${c.progress === 100 ? 'You can revisit modules or earn your certificate.' : 'Free to enroll · Learn at your own pace · Certificate included'}</p>
+        </div>
+        <button class="btn-primary" onclick="enrollCourse(${c.id})">${c.progress === 100 ? '🏆 Get Certificate' : c.progress > 0 ? 'Continue →' : 'Enroll Free'}</button>
+      </div>
+    </div>
+  `;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function enrollCourse(id) {
+  const c = courses.find(x => x.id === id);
+  if (c.progress === 100) {
+    closeModalDirect();
+    showPage('certification');
+  } else {
+    alert(`🎉 You're enrolled in "${c.title}"!\n\nIn a full app, this would open the course player. Your progress has been saved.`);
+    closeModalDirect();
+  }
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('courseModal')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('courseModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ═══════════════════════════════════════════════
+   SKILLS ASSESSMENT
+═══════════════════════════════════════════════ */
+let currentQ = 0;
+let answers = [];
+let selectedOption = null;
+
+function initAssessment() {
+  currentQ = 0;
+  answers = [];
+  selectedOption = null;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const area = document.getElementById('assessmentArea');
+  if (currentQ >= assessmentQuestions.length) {
+    showResults();
+    return;
+  }
+  const q = assessmentQuestions[currentQ];
+  const pct = Math.round((currentQ / assessmentQuestions.length) * 100);
+  area.innerHTML = `
+    <div class="assessment-progress">
+      <div class="assessment-progress-top">
+        <span>Question <strong>${currentQ + 1}</strong> of ${assessmentQuestions.length}</span>
+        <span><strong>${pct}%</strong> complete</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="question-card">
+      <span class="question-category">${q.category}</span>
+      <p class="question-text">${q.text}</p>
+      <div class="options-grid">
+        ${q.options.map((opt, i) => `
+          <button class="option-btn" id="opt-${i}" onclick="selectOption(${i})">
+            <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+            ${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="question-nav">
+        <span class="hint">Choose the answer that best describes you</span>
+        <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled style="opacity:0.4;cursor:not-allowed">
+          ${currentQ === assessmentQuestions.length - 1 ? 'See My Results →' : 'Next →'}
+        </button>
+      </div>
+    </div>
+  `;
+  selectedOption = null;
+}
+
+function selectOption(i) {
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('opt-' + i).classList.add('selected');
+  selectedOption = i;
+  const btn = document.getElementById('nextBtn');
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  btn.style.cursor = 'pointer';
+}
+
+function nextQuestion() {
+  if (selectedOption === null) return;
+  answers.push({ q: currentQ, answer: selectedOption, score: assessmentQuestions[currentQ].scores[selectedOption] });
+  currentQ++;
+  renderQuestion();
+}
+
+function showResults() {
+  const area = document.getElementById('assessmentArea');
+  const totalScore = answers.reduce((s, a) => s + a.score, 0);
+  const maxScore = assessmentQuestions.length * 4;
+  const pct = Math.round((totalScore / maxScore) * 100);
+
+  // Category scores
+  const cats = ['Digital Skills', 'Financial Literacy', 'Business Skills', 'Communication', 'Vocational'];
+  const catScores = {};
+  cats.forEach(c => {
+    const cAnswers = answers.filter((a, i) => assessmentQuestions[i].category === c);
+    const cMax = cAnswers.length * 4;
+    const cScore = cAnswers.reduce((s, a) => s + a.score, 0);
+    catScores[c] = cMax > 0 ? Math.round((cScore / cMax) * 100) : 0;
+  });
+
+  let level = pct >= 75 ? 'Advanced Learner' : pct >= 50 ? 'Intermediate Learner' : 'Foundation Learner';
+  let message = pct >= 75
+    ? 'You have strong foundational skills! You\'re ready for intermediate and advanced courses.'
+    : pct >= 50
+    ? 'You have a solid base to build from. Focused learning will unlock great opportunities.'
+    : 'You\'re at the start of an exciting journey. Our beginner courses are designed just for you.';
+
+  // Recommend courses based on lowest cat scores
+  const sortedCats = Object.entries(catScores).sort((a, b) => a[1] - b[1]);
+  const weakCat = sortedCats[0][0].toLowerCase();
+  const catMap = { 'digital skills': 'digital', 'financial literacy': 'finance', 'business skills': 'business', 'communication': 'business', 'vocational': 'vocational' };
+  const recCat = catMap[weakCat] || 'digital';
+  const recCourses = courses.filter(c => c.category === recCat).slice(0, 3);
+
+  area.innerHTML = `
+    <div class="results-card">
+      <div class="results-score-ring">
+        <div class="score">${pct}%</div>
+        <div class="score-label">Overall Score</div>
+      </div>
+      <h2>${level}</h2>
+      <p>${message}</p>
+      <div class="skill-breakdown">
+        ${Object.entries(catScores).map(([cat, score]) => `
+          <div class="skill-item">
+            <div class="skill-item-label">${cat}</div>
+            <div class="skill-item-bar"><div class="skill-item-fill" style="width:${score}%"></div></div>
+            <div class="skill-item-pct">${score}%</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="recommended-courses">
+        <h3>📍 Recommended for You</h3>
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Based on your assessment, here are courses to strengthen your weakest areas:</p>
+        ${recCourses.map(c => `
+          <button class="rec-course-chip" onclick="goToCourse(${c.id})">${c.emoji} ${c.title}</button>
+        `).join('')}
+      </div>
+      <div class="results-actions">
+        <button class="btn-primary" onclick="showPage('learning')">🎓 Go to Learning Hub</button>
+        <button class="btn-secondary" onclick="initAssessment()">Retake Assessment</button>
+      </div>
+    </div>
+  `;
+}
+
+function goToCourse(id) {
+  showPage('learning');
+  setTimeout(() => openCourse(id), 300);
+}
+
+/* ═══════════════════════════════════════════════
+   CERTIFICATIONS
+═══════════════════════════════════════════════ */
+function renderCertifications() {
+  // Earned cert preview
+  const earned = certifications.filter(c => c.progress === 100);
+  const previewArea = document.getElementById('certPreviewArea');
+
+  if (earned.length > 0) {
+    const e = earned[0];
+    previewArea.innerHTML = `
+      <div style="padding: 1rem 4rem 0;">
+        <p class="section-label">🏆 Latest Achievement</p>
+      </div>
+      <div class="certificate-preview">
+        <div class="cert-watermark">EmpowerHer</div>
+        <div class="cert-logo">Empower<span>Her</span></div>
+        <div class="cert-subtitle">Certificate of Achievement</div>
+        <div class="cert-divider"></div>
+        <div class="cert-title-text">This certifies that</div>
+        <div class="cert-recipient">Priya Sharma</div>
+        <div class="cert-award-text">has successfully completed</div>
+        <div class="cert-course-name">Tailoring & Fashion Design</div>
+        <div class="cert-divider"></div>
+        <div class="cert-footer-row">
+          <div class="cert-footer-col">
+            <div class="cert-sig">Asha Menon</div>
+            <div class="cert-sig-label">Programme Director</div>
+          </div>
+          <div class="cert-seal">🏆</div>
+          <div class="cert-footer-col">
+            <div class="cert-sig">Feb 2026</div>
+            <div class="cert-sig-label">Date Issued</div>
+          </div>
+        </div>
+      </div>
+      <div class="cert-actions">
+        <button class="btn-primary" onclick="downloadCert()">⬇ Download Certificate</button>
+        <button class="btn-secondary" onclick="shareCert()">↗ Share on LinkedIn</button>
+      </div>
+    `;
+  } else {
+    previewArea.innerHTML = '';
+  }
+
+  // Cert grid
+  document.getElementById('certGrid').innerHTML = certifications.map(cert => `
+    <div class="cert-card">
+      <div class="cert-header">
+        <div class="cert-icon">${cert.icon}</div>
+        <h3>${cert.title}</h3>
+        <p>${cert.issuer}</p>
+      </div>
+      <div class="cert-body">
+        <div class="cert-progress-section">
+          <div class="cert-progress-label">
+            <span>Progress</span>
+            <span style="color:var(--rust);font-weight:600">${cert.progress}%</span>
+          </div>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:${cert.progress}%"></div></div>
+        </div>
+        <div class="cert-requirements">
+          <h4>Required Courses</h4>
+          ${cert.requirements.map(req => {
+            const done = cert.completedReqs.includes(req);
+            return `<div class="req-item">
+              <div class="req-check ${done ? 'done' : 'pending'}">${done ? '✓' : '○'}</div>
+              <span style="${done ? 'color:var(--sage);font-weight:500' : ''}">${req}</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="cert-footer">
+        ${cert.progress === 100
+          ? `<button class="btn-primary" style="width:100%;justify-content:center;display:flex" onclick="viewCert('${cert.id}')">🏆 View Certificate</button>`
+          : `<button class="btn-outline" style="width:100%" onclick="showPage('learning')">Continue Learning →</button>`
+        }
+      </div>
+    </div>
+  `).join('');
+
+  // My certs list
+  const allCerts = [
+    { name: 'Tailoring & Fashion Design', issuer: 'Vocational Track', date: 'Jan 2026', earned: true },
+    { name: 'Digital Literacy Foundations', issuer: 'Digital Skills Track', date: 'In Progress', earned: false },
+    { name: 'Financial Independence', issuer: 'Finance Track', date: 'In Progress', earned: false },
+  ];
+  document.getElementById('myCertsList').innerHTML = allCerts.map(c => `
+    <div class="my-cert-item">
+      <div class="cert-badge-icon">🎓</div>
+      <div class="my-cert-info">
+        <h4>${c.name}</h4>
+        <p>${c.issuer} · ${c.date}</p>
+      </div>
+      <span class="cert-status-badge ${c.earned ? 'status-earned' : 'status-progress'}">
+        ${c.earned ? '✅ Earned' : '⏳ In Progress'}
+      </span>
+    </div>
+  `).join('');
+}
+
+function viewCert() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadCert() {
+  alert('🎉 Your certificate is ready!\n\nIn a full app, this would generate a personalized PDF certificate for download.');
+}
+
+function shareCert() {
+  alert('🚀 Sharing to LinkedIn!\n\nIn a full app, this would post your certificate to your LinkedIn profile with a verification link.');
+}
 </script>
 </body>
 </html>
