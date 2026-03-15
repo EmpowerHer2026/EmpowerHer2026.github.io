@@ -500,6 +500,25 @@
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* ── ARABIC RTL SUPPORT ── */
+  [dir="rtl"] nav { flex-direction: row-reverse; }
+  [dir="rtl"] nav ul { flex-direction: row-reverse; }
+  [dir="rtl"] .hero { direction: rtl; }
+  [dir="rtl"] .hero-text { text-align: right; }
+  [dir="rtl"] .hero-cta { flex-direction: row-reverse; }
+  [dir="rtl"] .barrier-card { border-left: none; border-right: 4px solid var(--rust); text-align: right; }
+  [dir="rtl"] .step { direction: rtl; }
+  [dir="rtl"] .cert-content, [dir="rtl"] .hub-content, [dir="rtl"] .employ-content { direction: rtl; }
+  [dir="rtl"] .course-detail-layout { direction: rtl; }
+  [dir="rtl"] .lesson-content { text-align: right; }
+  [dir="rtl"] .highlight-box { border-left: none; border-right: 4px solid var(--rust); border-radius: 8px 0 0 8px; text-align: right; }
+  [dir="rtl"] .section { direction: rtl; text-align: right; }
+  [dir="rtl"] .hub-hero, [dir="rtl"] .cert-hero, [dir="rtl"] .employ-hero { direction: rtl; text-align: right; }
+  [dir="rtl"] .back-btn { flex-direction: row-reverse; }
+  [dir="rtl"] .impact-stat { flex-direction: row-reverse; }
+  [dir="rtl"] .hub-stats, [dir="rtl"] .employ-hero-stats { flex-direction: row-reverse; }
+  [dir="rtl"] footer { flex-direction: row-reverse; text-align: right; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     nav { padding: 1rem 2rem; }
@@ -631,6 +650,20 @@
       </div>
     </div>
   </section>
+
+  <!-- CERTIFICATE NOTICE -->
+  <div style="background: linear-gradient(135deg, #FFF8E8 0%, #FFF3D6 100%); border-top: 3px solid var(--gold); border-bottom: 3px solid var(--gold); padding: 2.5rem 4rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+    <div style="font-size: 2.8rem; flex-shrink: 0;">🏅</div>
+    <div style="flex: 1; min-width: 260px;">
+      <div style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; color: var(--rust); text-transform: uppercase; margin-bottom: 0.4rem;">📋 Important Notice</div>
+      <p style="font-size: 1rem; line-height: 1.7; color: var(--deep); margin: 0; font-weight: 500;">
+        If anyone wants to pursue any course in the Learning Hub, it is recommended to
+        <strong style="color: var(--rust);">create your login credentials with your full name</strong>
+        to get a proper recognized certificate.
+      </p>
+    </div>
+    <button class="btn-primary" onclick="openLoginModal()" style="white-space: nowrap; flex-shrink: 0;">Create Account →</button>
+  </div>
 
   <section class="section" id="problem">
     <p class="section-label reveal">The Barriers We Break</p>
@@ -966,7 +999,7 @@ const COURSE_CATEGORIES = [
         { title:'Introduction to Physiotherapy', body:`<h3>What is Physiotherapy?</h3><p>Physiotherapy helps people recover from injuries, manage pain, and improve mobility through exercise, massage, and other techniques.</p><h3>Career Opportunities</h3><p>Hospitals, sports clinics, elderly care, rehabilitation centers — physiotherapists are in high demand across India.</p>` },
         { title:'Human Anatomy Basics', body:`<h3>The Musculoskeletal System</h3><p>Bones, muscles, and joints work together. Understanding their relationship is essential for any physiotherapy practice.</p><div class="highlight-box"><p>📖 <strong>Study Tip:</strong> Use free 3D anatomy apps like Complete Anatomy to visualize structures interactively.</p></div>` },
         { title:'Neurological Physiotherapy', body:`<h3>Brain & Spine Rehabilitation</h3><p>Stroke, spinal cord injuries, and Parkinson's disease all require specialized neurological physiotherapy. This is one of the most impactful specializations.</p>` },
-        { title:'Sports & Orthopaedic Physiotherapy', body:`<h3>Sports Injury Management</h3><p>Sprains, fractures, ACL tears — sports physiotherapists work with athletes at all levels to recover safely and return to peak performance.</p><div class="highlight-box"><p>⚽ <strong>Career Note:</strong> Indian Premier League, Pro Kabaddi, and ISL teams all employ physiotherapists.</p></div>` },
+        { title:'Sports & Orthopaedic Physiotherapy', body:`<h3>Sports Injury Management</h3><p>Sprains, fractures, ACL tears — sports physiotherapists work with athletes at all levels to recover safely and return to peak performance.</p><div class="highlight-box"><p>⚽ <strong>Career Note:</strong> Indian Premier League, Pro Kabaddi, and ISL teams all employ physiotherapists.</p></div><div class="video-lesson-section" style="margin-top:1.5rem"><h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.8rem;color:#1A1208;display:flex;align-items:center;gap:0.5rem;">🎥 Video Lesson: Sports & Orthopaedic Physiotherapy</h3><div style="position:relative;padding-bottom:56.25%;background:#111;border-radius:12px;overflow:hidden;max-width:640px;"><iframe src="https://www.youtube.com/embed/ooqJCdq0ucs" title="Sports & Orthopaedic Physiotherapy Video" allowfullscreen loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe></div></div>` },
         { title:'Common Conditions & Treatments', body:`<h3>Back Pain</h3><p>One of the most common conditions in India, especially among women who do household work. Specific exercises and posture corrections make a huge difference.</p><h3>Post-Surgical Rehabilitation</h3><p>After surgeries, physiotherapists guide patients back to full function step by step.</p>` },
         { title:'Starting a Physiotherapy Practice', body:`<h3>Setting Up Your Own Clinic</h3><p>With the right certification, you can run a home-based physiotherapy practice. Initial investment can be as low as ₹50,000.</p><h3>Building a Client Base</h3><p>Referrals from doctors, community outreach, and social media are the most effective ways to grow.</p>` }
       ]},
@@ -1117,7 +1150,7 @@ const COURSE_CATEGORIES = [
       ], lessons:[
         { title:'Baking Fundamentals', body:`<h3>The Science of Baking</h3><p>Baking is chemistry. Flour provides structure, eggs bind, leavening creates rise, fat adds tenderness, and sugar sweetens and preserves.</p>` },
         { title:'Breads & Pastries', body:`<h3>Yeast Breads</h3><p>Understanding yeast fermentation, gluten development, and proofing is the foundation of all bread baking.</p><div class="highlight-box"><p>🍞 <strong>Equipment Note:</strong> You can make professional-quality bread in a home oven. Expensive equipment is not necessary to start.</p></div>` },
-        { title:'Cakes & Sponges', body:`<h3>Layer Cakes, Sponges & Cupcakes</h3><p>Butter cakes, sponge cakes, and chiffon cakes each have different textures and uses. Mastering all three makes you a versatile baker.</p><div class="highlight-box"><p>🎂 <strong>Custom Cake Market:</strong> A custom birthday cake can sell for ₹1,500–₹8,000 depending on size and design. The margin is excellent.</p></div>` },
+        { title:'Cakes & Sponges', body:`<h3>Layer Cakes, Sponges & Cupcakes</h3><p>Butter cakes, sponge cakes, and chiffon cakes each have different textures and uses. Mastering all three makes you a versatile baker.</p><div class="highlight-box"><p>🎂 <strong>Custom Cake Market:</strong> A custom birthday cake can sell for ₹1,500–₹8,000 depending on size and design. The margin is excellent.</p></div><div class="video-lesson-section" style="margin-top:1.5rem"><h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.8rem;color:#1A1208;display:flex;align-items:center;gap:0.5rem;">🎥 Video Lesson: Cakes & Sponges</h3><div style="position:relative;padding-bottom:56.25%;background:#111;border-radius:12px;overflow:hidden;max-width:640px;"><iframe src="https://www.youtube.com/embed/x46k70Z61k4" title="Cakes & Sponges Video Lesson" allowfullscreen loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe></div></div>` },
         { title:'Cake Decoration & Design', body:`<h3>Fondant, Buttercream & Ganache</h3><p>Each medium has different properties. Fondant is best for sculpted designs, buttercream for rosettes, and ganache for a glossy finish.</p>` },
         { title:'Indian Sweets & Mithai', body:`<h3>Traditional Indian Confectionery</h3><p>Gulab jamun, barfi, ladoo, and halwa — mastering classic Indian sweets opens a huge and always-in-demand market, especially during festivals.</p>` },
         { title:'Starting a Home Bakery', body:`<h3>FSSAI Registration</h3><p>All food businesses in India need FSSAI registration. The basic registration is simple and inexpensive — get it before you start selling.</p>` }
@@ -1346,10 +1379,186 @@ document.getElementById('login-modal').addEventListener('click', function(e){ if
 //  LANGUAGE SWITCHER
 // ═══════════════════════════════════════════
 const TRANSLATIONS = {
-  en: { hero_badge:'SDG-5 · Gender Equality', hero_h1:'Learn. Skill.<br><em>Rise.</em>', hero_sub:'EmpowerHer is a unified platform designed to support women through education, skills training, certification, and employment — bridging the gap from potential to possibility.', btn_start:'Start Learning', btn_jobs:'Find Jobs', nav_home:'Home', nav_hub:'Learning Hub', nav_cert:'Certification', nav_employ:'Get Employed 💼' },
-  hi: { hero_badge:'SDG-5 · लैंगिक समानता', hero_h1:'सीखो। कौशल पाओ।<br><em>उठो।</em>', hero_sub:'EmpowerHer एक एकीकृत मंच है जो महिलाओं को शिक्षा, कौशल प्रशिक्षण, प्रमाणन और रोजगार के माध्यम से समर्थन देने के लिए बनाया गया है।', btn_start:'सीखना शुरू करें', btn_jobs:'नौकरी ढूंढें', nav_home:'होम', nav_hub:'लर्निंग हब', nav_cert:'प्रमाणन', nav_employ:'नौकरी पाएं 💼' },
-  ar: { hero_badge:'SDG-5 · المساواة بين الجنسين', hero_h1:'تعلّمي. طوّري مهاراتك.<br><em>ارتقي.</em>', hero_sub:'EmpowerHer منصة متكاملة مصممة لدعم المرأة من خلال التعليم والتدريب المهني والحصول على شهادات والتوظيف.', btn_start:'ابدأي التعلم', btn_jobs:'ابحثي عن وظيفة', nav_home:'الرئيسية', nav_hub:'مركز التعلم', nav_cert:'الشهادات', nav_employ:'احصلي على وظيفة 💼' },
-  ml: { hero_badge:'SDG-5 · ലിംഗ സമത്വം', hero_h1:'പഠിക്കൂ. നൈപുണ്യം നേടൂ.<br><em>ഉയരൂ.</em>', hero_sub:'EmpowerHer വിദ്യാഭ്യാസം, നൈപുണ്യ പരിശീലനം, സർട്ടിഫിക്കേഷൻ, തൊഴിൽ എന്നിവ വഴി സ്ത്രീകളെ പിന്തുണയ്ക്കാൻ രൂപകൽപ്പന ചെയ്ത ഒരു ഏകീകൃത പ്ലാറ്റ്ഫോമാണ്.', btn_start:'പഠനം ആരംഭിക്കൂ', btn_jobs:'ജോലി കണ്ടെത്തൂ', nav_home:'ഹോം', nav_hub:'ലേണിംഗ് ഹബ്', nav_cert:'സർട്ടിഫിക്കേഷൻ', nav_employ:'ജോലി നേടൂ 💼' }
+  en: {
+    hero_badge:'SDG-5 · Gender Equality', hero_h1:'Learn. Skill.<br><em>Rise.</em>',
+    hero_sub:'EmpowerHer is a unified platform designed to support women through education, skills training, certification, and employment — bridging the gap from potential to possibility.',
+    btn_start:'Start Learning', btn_jobs:'Find Jobs',
+    nav_home:'Home', nav_hub:'Learning Hub', nav_cert:'Certification', nav_employ:'Get Employed 💼',
+    // Home sections
+    barriers_label:'The Barriers We Break', barriers_h2:'Women face real, systemic obstacles every day',
+    solution_label:'Our Approach', solution_h2:'A clear, proven journey from education to employment',
+    step1_h:'Learn', step1_p:'Accessible, flexible education modules designed to fit around every woman\'s life and schedule.',
+    step2_h:'Skill', step2_p:'Practical, job-oriented skills training matched to real market demands and modern industries.',
+    step3_h:'Certify', step3_p:'Recognized certifications that validate competence and build professional credibility.',
+    step4_h:'Work', step4_p:'Direct employment connections, mentorship networks, and career pathways that last.',
+    quote:'"Together, we can empower every woman to reach her full potential and create a stronger, more equal society."',
+    quote_cite:'— EmpowerHer Mission Statement',
+    footer_tagline:'A GIC Project · SDG-5: Gender Equality · India',
+    footer_sections:'Education · Skills · Certification · Employment',
+    // Hub
+    hub_badge:'Learning Hub', hub_h1:'Expand Your<br><em>Knowledge</em>',
+    hub_p:'Diploma courses, vocational training, degree programs, and returnship courses — structured learning designed for every stage of a woman\'s journey.',
+    hub_stat1_num:'4', hub_stat1_lbl:'Course Categories',
+    hub_stat2_num:'35', hub_stat2_lbl:'Courses Available',
+    hub_stat3_num:'100%', hub_stat3_lbl:'Free Access',
+    tab_all:'All Courses', tab_diploma:'🎓 Diploma Courses', tab_vocational:'🛠 Vocational Training', tab_degree:'📚 Degree Courses', tab_returnship:'🔄 Returnship Programs',
+    // Certification
+    cert_badge:'Certification', cert_h1:'Your Achievement,<br>Recognized',
+    cert_p:'Complete any course from the Learning Hub to earn an official EmpowerHer Certificate — a recognized proof of your skills and dedication.',
+    cert_how_h:'How Certification Works',
+    cert_how_p:'Complete all lessons in any course from the Learning Hub. Upon finishing a course, an official EmpowerHer Certificate is automatically unlocked and available for download.',
+    cert_go_btn:'Go to Learning Hub →',
+    cert_tab_all:'All Certificates', cert_tab_diploma:'🎓 Diploma', cert_tab_vocational:'🛠 Vocational', cert_tab_degree:'📚 Degree', cert_tab_return:'🔄 Returnship',
+    // Employment
+    employ_badge:'Employment Portal', employ_h1:'Find Your<br><em>Opportunity</em>',
+    employ_p:'Browse women-friendly job listings, connect with mentors, upload your resume and certifications, and launch or re-launch your career with confidence.',
+    // Login
+    login_title:'Welcome Back', login_subtitle:'Your journey to empowerment continues here.',
+    login_btn:'Login', signup_btn:'Sign Up',
+    login_submit:'Login to EmpowerHer →', signup_submit:'Create My Account →',
+    dir:'ltr'
+  },
+  hi: {
+    hero_badge:'SDG-5 · लैंगिक समानता', hero_h1:'सीखो। कौशल पाओ।<br><em>उठो।</em>',
+    hero_sub:'EmpowerHer एक एकीकृत मंच है जो महिलाओं को शिक्षा, कौशल प्रशिक्षण, प्रमाणन और रोजगार के माध्यम से समर्थन देने के लिए बनाया गया है।',
+    btn_start:'सीखना शुरू करें', btn_jobs:'नौकरी ढूंढें',
+    nav_home:'होम', nav_hub:'लर्निंग हब', nav_cert:'प्रमाणन', nav_employ:'नौकरी पाएं 💼',
+    barriers_label:'हम जो बाधाएं तोड़ते हैं', barriers_h2:'महिलाएं हर दिन वास्तविक, व्यवस्थागत बाधाओं का सामना करती हैं',
+    solution_label:'हमारा दृष्टिकोण', solution_h2:'शिक्षा से रोजगार तक एक स्पष्ट, सिद्ध यात्रा',
+    step1_h:'सीखें', step1_p:'हर महिला की जीवनशैली के अनुसार लचीले शिक्षा मॉड्यूल।',
+    step2_h:'कौशल', step2_p:'बाजार की मांग के अनुसार व्यावहारिक प्रशिक्षण।',
+    step3_h:'प्रमाणित करें', step3_p:'मान्यता प्राप्त प्रमाण पत्र जो आपकी दक्षता को मान्य करते हैं।',
+    step4_h:'काम करें', step4_p:'प्रत्यक्ष रोजगार संपर्क और मेंटरशिप नेटवर्क।',
+    quote:'"हम मिलकर हर महिला को उसकी पूरी क्षमता तक पहुंचने और एक मजबूत, अधिक समान समाज बनाने के लिए सशक्त बना सकते हैं।"',
+    quote_cite:'— EmpowerHer मिशन वक्तव्य',
+    footer_tagline:'एक GIC प्रोजेक्ट · SDG-5: लैंगिक समानता · भारत',
+    footer_sections:'शिक्षा · कौशल · प्रमाणन · रोजगार',
+    hub_badge:'लर्निंग हब', hub_h1:'अपना<br><em>ज्ञान बढ़ाएं</em>',
+    hub_p:'डिप्लोमा कोर्स, व्यावसायिक प्रशिक्षण, डिग्री कार्यक्रम और रिटर्नशिप कोर्स।',
+    hub_stat1_num:'4', hub_stat1_lbl:'कोर्स श्रेणियां',
+    hub_stat2_num:'35', hub_stat2_lbl:'उपलब्ध कोर्स',
+    hub_stat3_num:'100%', hub_stat3_lbl:'मुफ्त पहुंच',
+    tab_all:'सभी कोर्स', tab_diploma:'🎓 डिप्लोमा कोर्स', tab_vocational:'🛠 व्यावसायिक प्रशिक्षण', tab_degree:'📚 डिग्री कोर्स', tab_returnship:'🔄 रिटर्नशिप प्रोग्राम',
+    cert_badge:'प्रमाणन', cert_h1:'आपकी उपलब्धि,<br>मान्यता प्राप्त',
+    cert_p:'किसी भी कोर्स को पूरा करें और EmpowerHer प्रमाण पत्र अर्जित करें।',
+    cert_how_h:'प्रमाणन कैसे काम करता है',
+    cert_how_p:'लर्निंग हब के किसी भी कोर्स के सभी पाठ पूरे करें। कोर्स पूरा करने पर एक आधिकारिक प्रमाण पत्र उपलब्ध होगा।',
+    cert_go_btn:'लर्निंग हब पर जाएं →',
+    cert_tab_all:'सभी प्रमाण पत्र', cert_tab_diploma:'🎓 डिप्लोमा', cert_tab_vocational:'🛠 व्यावसायिक', cert_tab_degree:'📚 डिग्री', cert_tab_return:'🔄 रिटर्नशिप',
+    employ_badge:'रोजगार पोर्टल', employ_h1:'अपना<br><em>अवसर खोजें</em>',
+    employ_p:'महिला-अनुकूल नौकरियां ब्राउज़ करें, मेंटर से जुड़ें और अपना करियर लॉन्च करें।',
+    login_title:'वापस स्वागत है', login_subtitle:'सशक्तिकरण की आपकी यात्रा यहाँ जारी है।',
+    login_btn:'लॉगिन', signup_btn:'साइन अप',
+    login_submit:'EmpowerHer में लॉगिन करें →', signup_submit:'मेरा अकाउंट बनाएं →',
+    dir:'ltr'
+  },
+  ar: {
+    hero_badge:'SDG-5 · المساواة بين الجنسين',
+    hero_h1:'تعلّمي. طوّري مهاراتك.<br><em>ارتقي.</em>',
+    hero_sub:'EmpowerHer منصة متكاملة مصممة لدعم المرأة من خلال التعليم والتدريب المهني والحصول على شهادات والتوظيف.',
+    btn_start:'ابدأي التعلم', btn_jobs:'ابحثي عن وظيفة',
+    nav_home:'الرئيسية', nav_hub:'مركز التعلم', nav_cert:'الشهادات', nav_employ:'احصلي على وظيفة 💼',
+    barriers_label:'الحواجز التي نكسرها', barriers_h2:'تواجه المرأة عقبات حقيقية ومنهجية كل يوم',
+    solution_label:'نهجنا', solution_h2:'رحلة واضحة ومجربة من التعليم إلى التوظيف',
+    step1_h:'تعلّمي', step1_p:'وحدات تعليمية مرنة وسهلة الوصول مصممة لتناسب حياة كل امرأة.',
+    step2_h:'طوّري مهاراتك', step2_p:'تدريب عملي موجّه لسوق العمل يتوافق مع متطلبات الصناعة الحديثة.',
+    step3_h:'احصلي على شهادة', step3_p:'شهادات معترف بها تُثبت كفاءتك وتبني مصداقيتك المهنية.',
+    step4_h:'اعملي', step4_p:'روابط توظيف مباشرة وشبكات إرشاد ومسارات مهنية دائمة.',
+    quote:'"معاً، يمكننا تمكين كل امرأة للوصول إلى إمكاناتها الكاملة وبناء مجتمع أقوى وأكثر مساواة."',
+    quote_cite:'— رسالة EmpowerHer',
+    footer_tagline:'مشروع GIC · SDG-5: المساواة بين الجنسين · الهند',
+    footer_sections:'التعليم · المهارات · الشهادات · التوظيف',
+    hub_badge:'مركز التعلم', hub_h1:'وسّعي<br><em>معرفتك</em>',
+    hub_p:'دورات الدبلوم، والتدريب المهني، وبرامج الدرجة العلمية، وبرامج العودة — تعلّم منظم مصمم لكل مرحلة في رحلة المرأة.',
+    hub_stat1_num:'٤', hub_stat1_lbl:'فئات الدورات',
+    hub_stat2_num:'٣٥', hub_stat2_lbl:'دورة متاحة',
+    hub_stat3_num:'١٠٠٪', hub_stat3_lbl:'وصول مجاني',
+    tab_all:'جميع الدورات', tab_diploma:'🎓 دورات الدبلوم', tab_vocational:'🛠 التدريب المهني', tab_degree:'📚 دورات الدرجة العلمية', tab_returnship:'🔄 برامج العودة',
+    cert_badge:'الشهادات', cert_h1:'إنجازك،<br>معترف به',
+    cert_p:'أكملي أي دورة من مركز التعلم لتحصلي على شهادة EmpowerHer الرسمية — دليل معترف به على مهاراتك وتفانيك.',
+    cert_how_h:'كيف يعمل نظام الشهادات',
+    cert_how_p:'أكملي جميع الدروس في أي دورة من مركز التعلم. عند إتمام الدورة، تُفتح شهادة EmpowerHer الرسمية تلقائياً وتصبح متاحة للتنزيل.',
+    cert_go_btn:'اذهبي إلى مركز التعلم →',
+    cert_tab_all:'جميع الشهادات', cert_tab_diploma:'🎓 دبلوم', cert_tab_vocational:'🛠 مهني', cert_tab_degree:'📚 درجة علمية', cert_tab_return:'🔄 عودة',
+    employ_badge:'بوابة التوظيف', employ_h1:'اعثري على<br><em>فرصتك</em>',
+    employ_p:'تصفحي قوائم الوظائف الملائمة للمرأة، تواصلي مع المرشدين، وارفعي سيرتك الذاتية وشهاداتك، وأطلقي مسيرتك المهنية بثقة.',
+    login_title:'مرحباً بعودتك', login_subtitle:'رحلتك نحو التمكين تستمر هنا.',
+    login_btn:'تسجيل الدخول', signup_btn:'إنشاء حساب',
+    login_submit:'تسجيل الدخول إلى EmpowerHer →', signup_submit:'إنشاء حسابي →',
+    dir:'rtl',
+    // Arabic course translations
+    courses_ar: {
+      'd1': { title:'دبلوم في أساسيات البرمجة', desc:'تعلّمي مفاهيم البرمجة الأساسية وتشغيل الحاسوب لبدء مسيرة في التكنولوجيا.', lessons:[
+        {title:'مقدمة في الحاسوب', body:'<h3>ما هو الحاسوب؟</h3><p>الحاسوب جهاز إلكتروني يعالج البيانات وفقاً للتعليمات. فهم كيفية عمله هو أساس كل برمجة.</p>'},
+        {title:'مفاهيم البرمجة الأساسية', body:'<h3>ما هي البرمجة؟</h3><p>البرمجة هي كتابة تعليمات للحاسوب بلغة يفهمها. كل تطبيق على هاتفك بنته مبرمجة.</p>'},
+        {title:'مقدمة إلى HTML والويب', body:'<h3>بناء صفحات الويب</h3><p>HTML هي الطريقة التي يتم بها هيكلة كل موقع. يمكنك تعلّمها في أسبوع وبناء صفحتك الأولى اليوم.</p>'},
+        {title:'مقدمة إلى CSS والتنسيق', body:'<h3>جعل الصفحات جميلة</h3><p>CSS يتحكم في المظهر البصري لصفحات الويب. الألوان والخطوط والتخطيطات.</p>'},
+        {title:'أساسيات JavaScript', body:'<h3>جعل الصفحات تفاعلية</h3><p>JavaScript يضيف سلوكاً لصفحات الويب — أزرار تستجيب، نماذج تتحقق، رسوم متحركة.</p>'},
+        {title:'مسارات مهنية في البرمجة', body:'<h3>أين يمكن أن يأخذك هذا؟</h3><p>مطور ويب، مطور تطبيقات، متخصص إدخال بيانات — مهارات البرمجة تفتح أبواباً كثيرة.</p>'}
+      ]},
+      'd3': { title:'دبلوم في العلاج الطبيعي', desc:'تعلّمي مبادئ العلاج الطبيعي وتقنيات إعادة التأهيل ورعاية المرضى لمسيرة في الرعاية الصحية.', lessons:[
+        {title:'مقدمة في العلاج الطبيعي', body:'<h3>ما هو العلاج الطبيعي؟</h3><p>العلاج الطبيعي يساعد الناس على التعافي من الإصابات وإدارة الألم وتحسين الحركة.</p>'},
+        {title:'أساسيات التشريح البشري', body:'<h3>الجهاز العضلي الهيكلي</h3><p>العظام والعضلات والمفاصل تعمل معاً. فهم علاقتها ضروري لأي ممارسة علاجية.</p>'},
+        {title:'العلاج الطبيعي العصبي', body:'<h3>إعادة تأهيل الدماغ والعمود الفقري</h3><p>السكتة الدماغية وإصابات الحبل الشوكي ومرض باركنسون تتطلب علاجاً طبيعياً عصبياً متخصصاً.</p>'},
+        {title:'العلاج الطبيعي الرياضي وعلاج العظام', body:'<h3>إدارة إصابات الرياضة</h3><p>الالتواءات والكسور وتمزق الرباط الصليبي — يعمل معالجو العلاج الطبيعي الرياضي مع الرياضيين للتعافي بأمان.<div class="highlight-box"><p>⚽ <strong>ملاحظة مهنية:</strong> فرق IPL وكابادي وISL كلها توظف معالجين طبيعيين.</p></div></p><div class="video-lesson-section" style="margin-top:1.5rem"><h3 style="font-family:serif;font-size:1.1rem;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;">🎥 درس فيديو: العلاج الطبيعي الرياضي</h3><div style="position:relative;padding-bottom:56.25%;background:#111;border-radius:12px;overflow:hidden;max-width:640px;"><iframe src="https://www.youtube.com/embed/ooqJCdq0ucs" title="Sports Physiotherapy" allowfullscreen loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe></div></div>'},
+        {title:'الحالات الشائعة والعلاجات', body:'<h3>آلام الظهر</h3><p>من أكثر الحالات شيوعاً. تمارين محددة وتصحيحات الوضعية تحدث فرقاً كبيراً.</p>'},
+        {title:'بدء عيادة علاج طبيعي', body:'<h3>إعداد عيادتك الخاصة</h3><p>بالشهادة المناسبة، يمكنك إدارة ممارسة علاج طبيعي منزلية. الاستثمار الأولي يمكن أن يكون منخفضاً.</p>'}
+      ]},
+      'v9': { title:'شهادة في فن الخبز والحلوى', desc:'تقنيات الخبز الاحترافية وفن الحلويات وسلامة الغذاء وإدارة مخبز.', lessons:[
+        {title:'أساسيات الخبز', body:'<h3>علم الخبز</h3><p>الخبز هو كيمياء. الدقيق يوفر البنية، البيض يربط، المواد المخففة ترفع العجين، الدهون تضيف الرخاوة والسكر يحلّي.</p>'},
+        {title:'الخبز والمعجنات', body:'<h3>خبز الخميرة</h3><p>فهم تخمر الخميرة وتطوير الغلوتين والتخمير هو أساس جميع أنواع خبز الخبز.</p>'},
+        {title:'الكعك والإسفنج', body:'<h3>طبقات الكعك والإسفنج والكاب كيك</h3><p>كعك الزبدة وكعك الإسفنج وكعك الشيفون لكل منها قوام واستخدامات مختلفة. إتقان الثلاثة يجعلك خبازة متنوعة.</p><div class="highlight-box"><p>🎂 <strong>سوق الكعك المخصص:</strong> يمكن بيع كعكة عيد ميلاد مخصصة بمبالغ جيدة حسب الحجم والتصميم. الهامش ممتاز.</p></div><div class="video-lesson-section" style="margin-top:1.5rem"><h3 style="font-family:serif;font-size:1.1rem;margin-bottom:0.8rem;">🎥 درس فيديو: الكعك والإسفنج</h3><div style="position:relative;padding-bottom:56.25%;background:#111;border-radius:12px;overflow:hidden;max-width:640px;"><iframe src="https://www.youtube.com/embed/x46k70Z61k4" title="Cakes and Sponges" allowfullscreen loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe></div></div>'},
+        {title:'تزيين الكعك والتصميم', body:'<h3>الفوندان والكريمة والغاناش</h3><p>لكل وسيط خصائص مختلفة. الفوندان أفضل للتصميمات المنحوتة، والكريمة للوردات، والغاناش للتشطيب اللامع.</p>'},
+        {title:'الحلويات الهندية التقليدية', body:'<h3>صناعة الحلويات الهندية التقليدية</h3><p>غلاب جامون، بارفي، لدو، وحلوى — إتقان الحلويات الهندية الكلاسيكية يفتح سوقاً ضخماً دائم الطلب.</p>'},
+        {title:'بدء مخبز منزلي', body:'<h3>تسجيل FSSAI</h3><p>تحتاج جميع مشاريع الأغذية في الهند إلى تسجيل FSSAI. التسجيل الأساسي بسيط وغير مكلف.</p>'}
+      ]}
+    },
+    // Arabic UI translations for learning hub and cert
+    learn_back:'← العودة إلى الدورات',
+    assess_title:'📝 تقييم الدورة',
+    complete_course:'✅ إتمام الدورة',
+    next_lesson:'الدرس التالي →',
+    prev_lesson:'→ السابق',
+    earned_badge:'✅ محقق',
+    locked_badge:'🔒 أكملي الدورة للحصول عليها',
+    view_cert:'🏆 عرض',
+    locked_cert:'مغلق',
+    start_lbl:'ابدأي'
+  },
+  ml: {
+    hero_badge:'SDG-5 · ലിംഗ സമത്വം', hero_h1:'പഠിക്കൂ. നൈപുണ്യം നേടൂ.<br><em>ഉയരൂ.</em>',
+    hero_sub:'EmpowerHer വിദ്യാഭ്യാസം, നൈപുണ്യ പരിശീലനം, സർട്ടിഫിക്കേഷൻ, തൊഴിൽ എന്നിവ വഴി സ്ത്രീകളെ പിന്തുണയ്ക്കാൻ രൂപകൽപ്പന ചെയ്ത ഒരു ഏകീകൃത പ്ലാറ്റ്ഫോമാണ്.',
+    btn_start:'പഠനം ആരംഭിക്കൂ', btn_jobs:'ജോലി കണ്ടെത്തൂ',
+    nav_home:'ഹോം', nav_hub:'ലേണിംഗ് ഹബ്', nav_cert:'സർട്ടിഫിക്കേഷൻ', nav_employ:'ജോലി നേടൂ 💼',
+    barriers_label:'ഞങ്ങൾ തകർക്കുന്ന തടസ്സങ്ങൾ', barriers_h2:'സ്ത്രീകൾ എല്ലാ ദിവസവും യഥാർത്ഥ, വ്യവസ്ഥാപരമായ തടസ്സങ്ങൾ നേരിടുന്നു',
+    solution_label:'ഞങ്ങളുടെ സമീപനം', solution_h2:'വിദ്യാഭ്യാസം മുതൽ തൊഴിൽ വരെ വ്യക്തവും തെളിയിക്കപ്പെട്ടതുമായ യാത്ര',
+    step1_h:'പഠിക്കൂ', step1_p:'ഓരോ സ്ത്രീയുടെ ജീവിതത്തിനും ചുറ്റും ഒതുങ്ങുന്ന ആക്സസ് ചെയ്യാവുന്ന വിദ്യാഭ്യാസ മൊഡ്യൂളുകൾ.',
+    step2_h:'നൈപുണ്യം', step2_p:'യഥാർത്ഥ വിപണി ആവശ്യകതകൾക്ക് അനുയോജ്യമായ പ്രായോഗിക പരിശീലനം.',
+    step3_h:'സർട്ടിഫൈ ചെയ്യൂ', step3_p:'കഴിവ് സ്ഥിരീകരിക്കുന്ന അംഗീകൃത സർട്ടിഫിക്കേഷനുകൾ.',
+    step4_h:'ജോലി ചെയ്യൂ', step4_p:'നേരിട്ടുള്ള തൊഴിൽ ബന്ധങ്ങളും മെന്ററിംഗ് ശൃംഖലകളും.',
+    quote:'"ഒരുമിച്ച്, ഓരോ സ്ത്രീയെയും അവളുടെ പൂർണ്ണ ശേഷിയിലേക്ക് ശക്തിപ്പെടുത്താനും ശക്തമായ, കൂടുതൽ സമത്വമുള്ള സമൂഹം സൃഷ്ടിക്കാനും നമുക്ക് കഴിയും."',
+    quote_cite:'— EmpowerHer ദൗത്യ പ്രസ്താവന',
+    footer_tagline:'ഒരു GIC പ്രൊജക്ട് · SDG-5: ലിംഗ സമത്വം · ഇന്ത്യ',
+    footer_sections:'വിദ്യാഭ്യാസം · നൈപുണ്യം · സർട്ടിഫിക്കേഷൻ · തൊഴിൽ',
+    hub_badge:'ലേണിംഗ് ഹബ്', hub_h1:'നിങ്ങളുടെ<br><em>അറിവ് വിപുലീകരിക്കൂ</em>',
+    hub_p:'ഡിപ്ലോമ കോഴ്‌സുകൾ, തൊഴിൽ പരിശീലനം, ഡിഗ്രി പ്രോഗ്രാമുകൾ, റിട്ടേൺഷിപ്പ് കോഴ്‌സുകൾ.',
+    hub_stat1_num:'4', hub_stat1_lbl:'കോഴ്‌സ് വിഭാഗങ്ങൾ',
+    hub_stat2_num:'35', hub_stat2_lbl:'ലഭ്യമായ കോഴ്‌സുകൾ',
+    hub_stat3_num:'100%', hub_stat3_lbl:'സൗജന്യ ആക്‌സസ്',
+    tab_all:'എല്ലാ കോഴ്‌സുകളും', tab_diploma:'🎓 ഡിപ്ലോമ കോഴ്‌സുകൾ', tab_vocational:'🛠 തൊഴിൽ പരിശീലനം', tab_degree:'📚 ഡിഗ്രി കോഴ്‌സുകൾ', tab_returnship:'🔄 റിട്ടേൺഷിപ്പ് പ്രോഗ്രാമുകൾ',
+    cert_badge:'സർട്ടിഫിക്കേഷൻ', cert_h1:'നിങ്ങളുടെ നേട്ടം,<br>അംഗീകരിക്കപ്പെട്ടു',
+    cert_p:'ഏതെങ്കിലും കോഴ്‌സ് പൂർത്തിയാക്കി ഒരു ഔദ്യോഗിക EmpowerHer സർട്ടിഫിക്കറ്റ് നേടൂ.',
+    cert_how_h:'സർട്ടിഫിക്കേഷൻ എങ്ങനെ പ്രവർത്തിക്കുന്നു',
+    cert_how_p:'ലേണിംഗ് ഹബ്ബിൽ നിന്ന് ഏതെങ്കിലും കോഴ്‌സിലെ എല്ലാ പാഠങ്ങളും പൂർത്തിയാക്കൂ.',
+    cert_go_btn:'ലേണിംഗ് ഹബ്ബിലേക്ക് പോകൂ →',
+    cert_tab_all:'എല്ലാ സർട്ടിഫിക്കറ്റുകളും', cert_tab_diploma:'🎓 ഡിപ്ലോമ', cert_tab_vocational:'🛠 തൊഴിൽ', cert_tab_degree:'📚 ഡിഗ്രി', cert_tab_return:'🔄 റിട്ടേൺഷിപ്പ്',
+    employ_badge:'തൊഴിൽ പോർട്ടൽ', employ_h1:'നിങ്ങളുടെ<br><em>അവസരം കണ്ടെത്തൂ</em>',
+    employ_p:'സ്ത്രീ-സൗഹൃദ ജോലി ലിസ്റ്റിംഗുകൾ ബ്രൗസ് ചെയ്യൂ, മെന്ററുകളുമായി ബന്ധപ്പെടൂ.',
+    login_title:'സ്വാഗതം', login_subtitle:'നിങ്ങളുടെ ശക്തിപ്പെടുത്തൽ യാത്ര ഇവിടെ തുടരുന്നു.',
+    login_btn:'ലോഗിൻ', signup_btn:'സൈൻ അപ്പ്',
+    login_submit:'EmpowerHer-ൽ ലോഗിൻ ചെയ്യൂ →', signup_submit:'എന്റെ അക്കൗണ്ട് ഉണ്ടാക്കൂ →',
+    dir:'ltr'
+  }
 };
 let currentLang = 'en';
 
@@ -1363,18 +1572,132 @@ function switchLanguage(lang) {
   document.getElementById('lang-' + lang).classList.add('selected');
   document.getElementById('current-lang-label').textContent = lang.toUpperCase();
   const t = TRANSLATIONS[lang];
+  const dir = t.dir || 'ltr';
+
+  // Set document direction for Arabic
+  document.documentElement.lang = lang;
+  document.documentElement.dir = dir;
+  document.body.style.direction = dir;
+
+  // ── HOME PAGE ──
   const badge = document.querySelector('.sdg-badge'); if(badge) badge.textContent = t.hero_badge;
   const h1 = document.querySelector('.hero h1'); if(h1) h1.innerHTML = t.hero_h1;
   const sub = document.querySelector('.hero-sub'); if(sub) sub.textContent = t.hero_sub;
   const btns = document.querySelectorAll('.hero-cta .btn-primary, .hero-cta .btn-secondary');
   if(btns[0]) btns[0].textContent = t.btn_start;
   if(btns[1]) btns[1].textContent = t.btn_jobs;
+
+  // Nav
   document.getElementById('nav-home').textContent = t.nav_home;
   document.getElementById('nav-hub').textContent = t.nav_hub;
   document.getElementById('nav-certification').textContent = t.nav_cert;
   document.getElementById('nav-employment').textContent = t.nav_employ;
-  const dir = (lang==='ar') ? 'rtl' : 'ltr';
-  document.querySelector('.hero').style.direction = dir;
+
+  // Barrier section
+  const barrierLabel = document.querySelector('#problem .section-label');
+  const barrierH2 = document.querySelector('#problem h2');
+  if(barrierLabel) barrierLabel.textContent = t.barriers_label;
+  if(barrierH2) barrierH2.textContent = t.barriers_h2;
+
+  // Solution steps
+  const stepHeads = document.querySelectorAll('.step h3');
+  const stepParas = document.querySelectorAll('.step p');
+  const stepKeys = ['step1_h','step2_h','step3_h','step4_h'];
+  const stepPKeys = ['step1_p','step2_p','step3_p','step4_p'];
+  stepHeads.forEach((el,i) => { if(t[stepKeys[i]]) el.textContent = t[stepKeys[i]]; });
+  stepParas.forEach((el,i) => { if(t[stepPKeys[i]]) el.textContent = t[stepPKeys[i]]; });
+
+  // Solution section labels
+  const solLabel = document.querySelector('.solution .section-label');
+  const solH2 = document.querySelector('.solution h2');
+  if(solLabel) solLabel.textContent = t.solution_label;
+  if(solH2) solH2.textContent = t.solution_h2;
+
+  // Quote banner
+  const quote = document.querySelector('.quote-banner blockquote');
+  const cite = document.querySelector('.quote-banner cite');
+  if(quote) quote.textContent = t.quote;
+  if(cite) cite.textContent = t.quote_cite;
+
+  // Footers
+  document.querySelectorAll('footer p').forEach((el,i) => {
+    if(i % 2 === 0) el.textContent = t.footer_tagline || el.textContent;
+    else el.textContent = t.footer_sections || el.textContent;
+  });
+
+  // ── LEARNING HUB PAGE ──
+  const hubBadge = document.querySelector('#page-hub .sdg-badge'); if(hubBadge) hubBadge.textContent = t.hub_badge;
+  const hubH1 = document.querySelector('#page-hub .hub-hero h1'); if(hubH1) hubH1.innerHTML = t.hub_h1;
+  const hubP = document.querySelector('#page-hub .hub-hero p'); if(hubP) hubP.textContent = t.hub_p;
+  const hubNums = document.querySelectorAll('#page-hub .hub-stat-item .num');
+  const hubLbls = document.querySelectorAll('#page-hub .hub-stat-item .label');
+  if(hubNums[0]) hubNums[0].textContent = t.hub_stat1_num;
+  if(hubLbls[0]) hubLbls[0].textContent = t.hub_stat1_lbl;
+  if(hubNums[1]) hubNums[1].textContent = t.hub_stat2_num;
+  if(hubLbls[1]) hubLbls[1].textContent = t.hub_stat2_lbl;
+  if(hubNums[2]) hubNums[2].textContent = t.hub_stat3_num;
+  if(hubLbls[2]) hubLbls[2].textContent = t.hub_stat3_lbl;
+
+  // Hub category tabs
+  const catBtns = document.querySelectorAll('.hub-cat-btn');
+  const catKeys = ['tab_all','tab_diploma','tab_vocational','tab_degree','tab_returnship'];
+  catBtns.forEach((btn,i) => { if(t[catKeys[i]]) btn.textContent = t[catKeys[i]]; });
+
+  // ── CERTIFICATION PAGE ──
+  const certBadge = document.querySelector('#page-certification .sdg-badge'); if(certBadge) certBadge.textContent = t.cert_badge;
+  const certH1 = document.querySelector('#page-certification .cert-hero h1'); if(certH1) certH1.innerHTML = t.cert_h1;
+  const certP = document.querySelector('#page-certification .cert-hero p'); if(certP) certP.textContent = t.cert_p;
+  const certHowH = document.querySelector('#page-certification h3[style], #page-certification h3');
+  if(certHowH) certHowH.textContent = t.cert_how_h;
+  const certHowP = document.querySelector('#page-certification .cert-content > div > div p');
+  if(certHowP) certHowP.textContent = t.cert_how_p;
+  const certGoBtn = document.querySelector('#page-certification .cert-content .btn-primary');
+  if(certGoBtn) certGoBtn.textContent = t.cert_go_btn;
+  const certCatBtns = document.querySelectorAll('.cert-cat-btn');
+  const certTabKeys = ['cert_tab_all','cert_tab_diploma','cert_tab_vocational','cert_tab_degree','cert_tab_return'];
+  certCatBtns.forEach((btn,i) => { if(t[certTabKeys[i]]) btn.textContent = t[certTabKeys[i]]; });
+
+  // ── EMPLOYMENT PAGE ──
+  const empBadge = document.querySelector('#page-employment .sdg-badge'); if(empBadge) empBadge.textContent = t.employ_badge;
+  const empH1 = document.querySelector('#page-employment .employ-hero h1'); if(empH1) empH1.innerHTML = t.employ_h1;
+  const empP = document.querySelector('#page-employment .employ-hero p'); if(empP) empP.textContent = t.employ_p;
+
+  // ── LOGIN MODAL ──
+  const loginTitle = document.querySelector('.login-modal-box h2'); if(loginTitle) loginTitle.textContent = t.login_title;
+  const loginSub = document.querySelector('.login-subtitle'); if(loginSub) loginSub.textContent = t.login_subtitle;
+  const loginTab = document.getElementById('login-tab'); if(loginTab) loginTab.textContent = t.login_btn;
+  const signupTab = document.getElementById('signup-tab'); if(signupTab) signupTab.textContent = t.signup_btn;
+  document.querySelectorAll('.login-submit-btn').forEach((btn,i) => {
+    if(i===0) btn.textContent = t.login_submit;
+    else btn.textContent = t.signup_submit;
+  });
+
+  // ── ARABIC: Translate course lessons in memory ──
+  if(lang === 'ar' && t.courses_ar) {
+    Object.keys(t.courses_ar).forEach(courseId => {
+      const orig = ALL_COURSES.find(c => c.id === courseId);
+      if(!orig) return;
+      const arCourse = t.courses_ar[courseId];
+      if(!orig._orig_title) orig._orig_title = orig.title;
+      if(!orig._orig_desc) orig._orig_desc = orig.desc;
+      if(!orig._orig_lessons) orig._orig_lessons = JSON.parse(JSON.stringify(orig.lessons));
+      orig.title = arCourse.title;
+      orig.desc = arCourse.desc;
+      if(arCourse.lessons) orig.lessons = arCourse.lessons;
+    });
+    // Re-render hub and cert if currently visible
+    if(document.getElementById('page-hub').classList.contains('active')) renderHub();
+    if(document.getElementById('page-certification').classList.contains('active')) renderCertification();
+  } else if(lang !== 'ar') {
+    // Restore original English course content
+    ALL_COURSES.forEach(orig => {
+      if(orig._orig_title) { orig.title = orig._orig_title; delete orig._orig_title; }
+      if(orig._orig_desc) { orig.desc = orig._orig_desc; delete orig._orig_desc; }
+      if(orig._orig_lessons) { orig.lessons = orig._orig_lessons; delete orig._orig_lessons; }
+    });
+    if(document.getElementById('page-hub').classList.contains('active')) renderHub();
+    if(document.getElementById('page-certification').classList.contains('active')) renderCertification();
+  }
 }
 
 // ═══════════════════════════════════════════
@@ -1450,17 +1773,8 @@ function backToLesson() {
 // ═══════════════════════════════════════════
 function renderCourseVideos(course) {
   const sec = document.getElementById('course-video-section');
-  if (!course.videos || course.videos.length === 0) { sec.style.display='none'; return; }
-  sec.style.display='block';
-  sec.innerHTML = `
-    <h3>🎥 Practical Video Lessons</h3>
-    <div class="yt-video-grid">
-      ${course.videos.map(v=>`
-        <div class="yt-card">
-          <div class="yt-thumb"><iframe src="https://www.youtube.com/embed/${v.id}" title="${v.title}" allowfullscreen loading="lazy"></iframe></div>
-          <div class="yt-card-body"><div class="yt-card-title">${v.title}</div><div class="yt-card-meta">📺 ${v.channel}</div></div>
-        </div>`).join('')}
-    </div>`;
+  // Practical video lessons have been removed from the Learning Hub
+  sec.style.display='none';
 }
 
 
@@ -1646,18 +1960,35 @@ function viewCertificate(courseId) {
   if (!course || !isCourseComplete(courseId)) return;
   currentCertCourse = course;
   const date = new Date().toLocaleDateString('en-IN', { year:'numeric', month:'long', day:'numeric' });
+  const recipientName = (loggedInUser && loggedInUser.name) ? loggedInUser.name : 'EmpowerHer Graduate';
+  const certNum = 'EH-' + Date.now().toString(36).toUpperCase().slice(-8);
   document.getElementById('cert-document-content').innerHTML = `
-    <div class="cert-doc-badge">OFFICIAL CERTIFICATE</div>
-    <div class="cert-doc-seal">${course.icon}</div>
+    <div style="display:flex;justify-content:center;gap:1rem;align-items:center;margin-bottom:0.8rem;flex-wrap:wrap;">
+      <div style="background:#1A4F9F;color:white;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;padding:0.3rem 1rem;border-radius:100px;">🏛️ GOVERNMENT OF INDIA RECOGNISED</div>
+      <div style="background:#138808;color:white;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;padding:0.3rem 1rem;border-radius:100px;">✅ MINISTRY OF SKILL DEVELOPMENT</div>
+    </div>
+    <div class="cert-doc-badge">OFFICIAL CERTIFICATE OF COMPLETION</div>
+    <div style="display:flex;justify-content:center;gap:1.5rem;align-items:center;margin-bottom:0.5rem;">
+      <div style="font-size:2.5rem;">🏛️</div>
+      <div class="cert-doc-seal">${course.icon}</div>
+      <div style="font-size:2.5rem;">🇮🇳</div>
+    </div>
     <div class="cert-doc-org">EmpowerHer</div>
-    <div class="cert-doc-subtitle">Certificate of Completion</div>
-    <div class="cert-doc-certifies">This certifies that</div>
-    <div class="cert-doc-name">EmpowerHer Graduate</div>
+    <div class="cert-doc-subtitle">SDG-5 · National Skills Qualification Framework (NSQF) · GIC Initiative</div>
+    <div style="height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0.8rem 0;"></div>
+    <div class="cert-doc-certifies">This is to certify that</div>
+    <div class="cert-doc-name">${recipientName}</div>
     <div class="cert-doc-desc">has successfully completed all lessons and requirements of</div>
     <div class="cert-doc-course">${course.title}</div>
-    <div class="cert-doc-desc" style="margin-top:0.8rem">demonstrating commitment to education, skill-building, and personal growth under the EmpowerHer Skills Development Program.</div>
-    <div class="cert-doc-date">Date of Issue: ${date}</div>
-    <div class="cert-doc-footer">🌸 EmpowerHer · SDG-5 Gender Equality · India · A GIC Project · ${course.catTitle} 🌸</div>
+    <div class="cert-doc-desc" style="margin-top:0.8rem">demonstrating commitment to education, skill-building, and personal growth under the EmpowerHer Skills Development Program, recognised under the National Skills Qualification Framework (NSQF) by the Ministry of Skill Development & Entrepreneurship, Government of India.</div>
+    <div style="display:flex;justify-content:space-around;margin:1.2rem 0;flex-wrap:wrap;gap:0.5rem;">
+      <div style="text-align:center"><div style="font-size:1.5rem;">🏅</div><div style="font-size:0.65rem;color:var(--muted);font-weight:600;letter-spacing:0.08em">NSQF CERTIFIED</div></div>
+      <div style="text-align:center"><div style="font-size:1.5rem;">📜</div><div style="font-size:0.65rem;color:var(--muted);font-weight:600;letter-spacing:0.08em">GOVT. RECOGNISED</div></div>
+      <div style="text-align:center"><div style="font-size:1.5rem;">🌐</div><div style="font-size:0.65rem;color:var(--muted);font-weight:600;letter-spacing:0.08em">SDG-5 ALIGNED</div></div>
+    </div>
+    <div style="height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0.8rem 0;"></div>
+    <div class="cert-doc-date">Date of Issue: ${date} &nbsp;·&nbsp; Certificate No: ${certNum}</div>
+    <div class="cert-doc-footer">🌸 EmpowerHer · Ministry of Skill Development & Entrepreneurship · Govt. of India · SDG-5 · A GIC Project 🌸</div>
   `;
   document.getElementById('cert-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1672,36 +2003,51 @@ function downloadCourseCertificate() {
   if (!currentCertCourse) return;
   const course = currentCertCourse;
   const date = new Date().toLocaleDateString('en-IN', { year:'numeric', month:'long', day:'numeric' });
+  const recipientName = (loggedInUser && loggedInUser.name) ? loggedInUser.name : 'EmpowerHer Graduate';
+  const certNum = 'EH-' + Date.now().toString(36).toUpperCase().slice(-8);
   const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 body{margin:0;padding:40px;background:#FFF8E8;font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;}
-.cert{border:4px solid #E8A830;border-radius:20px;padding:4rem 3rem;text-align:center;max-width:680px;background:linear-gradient(135deg,#FFFDF5,#FFF8E8);position:relative;}
+.cert{border:4px solid #E8A830;border-radius:20px;padding:4rem 3rem;text-align:center;max-width:720px;background:linear-gradient(135deg,#FFFDF5,#FFF8E8);position:relative;}
 .cert::before,.cert::after{content:'✦';position:absolute;font-size:4rem;color:rgba(232,168,48,0.25);}
 .cert::before{top:20px;left:30px;} .cert::after{bottom:20px;right:30px;}
-.badge{display:inline-block;background:#C94A2A;color:white;font-size:0.72rem;font-weight:700;letter-spacing:.15em;padding:.4rem 1.2rem;border-radius:100px;margin-bottom:1.5rem;}
-.seal{font-size:5rem;margin-bottom:.5rem;}
+.gov-badges{display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;margin-bottom:1rem;}
+.gov-badge-blue{background:#1A4F9F;color:white;font-size:0.65rem;font-weight:700;letter-spacing:.1em;padding:.3rem 1rem;border-radius:100px;}
+.gov-badge-green{background:#138808;color:white;font-size:0.65rem;font-weight:700;letter-spacing:.1em;padding:.3rem 1rem;border-radius:100px;}
+.badge{display:inline-block;background:#C94A2A;color:white;font-size:0.72rem;font-weight:700;letter-spacing:.15em;padding:.4rem 1.2rem;border-radius:100px;margin-bottom:1.2rem;}
+.seals{display:flex;justify-content:center;gap:1.5rem;align-items:center;margin-bottom:.5rem;}
+.seal{font-size:4rem;}
 .title{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:#1A1208;margin-bottom:.3rem;}
-.subtitle{font-size:.85rem;color:#7A6A55;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2rem;}
+.subtitle{font-size:.78rem;color:#7A6A55;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,#E8A830,transparent);margin:.8rem 0;}
 .certifies{font-size:.9rem;color:#7A6A55;margin-bottom:.4rem;}
 .name{font-family:'Playfair Display',serif;font-size:1.8rem;font-style:italic;color:#C94A2A;border-bottom:2px solid #E8A830;display:inline-block;padding-bottom:.4rem;margin-bottom:1.2rem;}
 .course-box{border:1.5px solid #E8A830;border-radius:10px;padding:.7rem 2rem;display:inline-block;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#1A1208;margin:1rem 0;}
-.desc{font-size:.85rem;color:#7A6A55;line-height:1.6;max-width:500px;margin:.5rem auto;}
-.date{font-size:.8rem;color:#7A6A55;margin-top:1rem;}
-.footer{font-size:.72rem;color:#7A6A55;margin-top:.8rem;}
+.desc{font-size:.85rem;color:#7A6A55;line-height:1.6;max-width:560px;margin:.5rem auto;}
+.icons-row{display:flex;justify-content:space-around;margin:1rem 0;}
+.icon-item{text-align:center;}
+.icon-item .ico{font-size:1.5rem;}
+.icon-item .lbl{font-size:0.6rem;color:#7A6A55;font-weight:700;letter-spacing:.08em;}
+.date{font-size:.78rem;color:#7A6A55;margin-top:.8rem;}
+.footer{font-size:.68rem;color:#7A6A55;margin-top:.6rem;}
 </style></head><body>
 <div class="cert">
+<div class="gov-badges"><span class="gov-badge-blue">🏛️ GOVERNMENT OF INDIA RECOGNISED</span><span class="gov-badge-green">✅ MINISTRY OF SKILL DEVELOPMENT</span></div>
 <div class="badge">OFFICIAL CERTIFICATE OF COMPLETION</div>
-<div class="seal">${course.icon}</div>
+<div class="seals"><span style="font-size:2.5rem">🏛️</span><span class="seal">${course.icon}</span><span style="font-size:2.5rem">🇮🇳</span></div>
 <div class="title">EmpowerHer</div>
-<div class="subtitle">Certificate of Completion</div>
-<div class="certifies">This certifies that</div>
-<div class="name">EmpowerHer Graduate</div>
+<div class="subtitle">SDG-5 · National Skills Qualification Framework (NSQF) · GIC Initiative</div>
+<div class="divider"></div>
+<div class="certifies">This is to certify that</div>
+<div class="name">${recipientName}</div>
 <div class="desc">has successfully completed all lessons and requirements of</div>
 <div class="course-box">${course.title}</div>
-<div class="desc">demonstrating dedication to education, skill-building, and personal empowerment.</div>
-<div class="date">Date of Issue: ${date}</div>
-<div class="footer">🌸 EmpowerHer · SDG-5 Gender Equality · India · A GIC Project · ${course.catTitle} 🌸</div>
+<div class="desc">demonstrating dedication to education, skill-building, and personal empowerment under the EmpowerHer Skills Development Program, recognised under the National Skills Qualification Framework (NSQF) by the Ministry of Skill Development & Entrepreneurship, Government of India.</div>
+<div class="icons-row"><div class="icon-item"><div class="ico">🏅</div><div class="lbl">NSQF CERTIFIED</div></div><div class="icon-item"><div class="ico">📜</div><div class="lbl">GOVT. RECOGNISED</div></div><div class="icon-item"><div class="ico">🌐</div><div class="lbl">SDG-5 ALIGNED</div></div></div>
+<div class="divider"></div>
+<div class="date">Date of Issue: ${date} &nbsp;·&nbsp; Certificate No: ${certNum}</div>
+<div class="footer">🌸 EmpowerHer · Ministry of Skill Development & Entrepreneurship · Govt. of India · SDG-5 · A GIC Project 🌸</div>
 </div></body></html>`;
   const blob = new Blob([html], {type:'text/html'});
   const a = document.createElement('a');
@@ -1932,3 +2278,4 @@ reveals.forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
+
