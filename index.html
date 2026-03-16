@@ -630,7 +630,8 @@
       <p class="hero-sub">EmpowerHer is a unified platform designed to support women through education, skills training, certification, and employment — bridging the gap from potential to possibility.</p>
       <div class="hero-cta">
         <button class="btn-primary" onclick="showPage('hub')">Start Learning</button>
-        <button class="btn-secondary" onclick="showPage('employment')">Find Jobs</button>
+        <button class="btn-primary" onclick="showPage('certification')" style="background: var(--gold); box-shadow: 0 4px 20px rgba(232,168,48,0.35);">Get Certified</button>
+        <button class="btn-primary" onclick="showPage('employment')" style="background: var(--sage); box-shadow: 0 4px 20px rgba(74,124,89,0.35);">Find Jobs</button>
       </div>
     </div>
     <div class="hero-visual">
@@ -650,20 +651,6 @@
       </div>
     </div>
   </section>
-
-  <!-- CERTIFICATE NOTICE -->
-  <div style="background: linear-gradient(135deg, #FFF8E8 0%, #FFF3D6 100%); border-top: 3px solid var(--gold); border-bottom: 3px solid var(--gold); padding: 2.5rem 4rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
-    <div style="font-size: 2.8rem; flex-shrink: 0;">🏅</div>
-    <div style="flex: 1; min-width: 260px;">
-      <div style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; color: var(--rust); text-transform: uppercase; margin-bottom: 0.4rem;">📋 Important Notice</div>
-      <p style="font-size: 1rem; line-height: 1.7; color: var(--deep); margin: 0; font-weight: 500;">
-        If anyone wants to pursue any course in the Learning Hub, it is recommended to
-        <strong style="color: var(--rust);">create your login credentials with your full name</strong>
-        to get a proper recognized certificate.
-      </p>
-    </div>
-    <button class="btn-primary" onclick="openLoginModal()" style="white-space: nowrap; flex-shrink: 0;">Create Account →</button>
-  </div>
 
   <section class="section" id="problem">
     <p class="section-label reveal">The Barriers We Break</p>
@@ -716,7 +703,7 @@
 
   <footer>
     <div class="logo">Empower<span>Her</span></div>
-    <p>A GIC Project · SDG-5: Gender Equality · India</p>
+    <p>A GIC Project · SDG-5: Gender Equality</p>
     <p>Education · Skills · Certification · Employment</p>
   </footer>
 </div>
@@ -725,7 +712,15 @@
      LEARNING HUB PAGE
 ══════════════════════════════ -->
 <div id="page-hub" class="page">
-  <div class="hub-hero">
+  <div class="hub-hero" style="position: relative;">
+    <div style="position: absolute; top: 5.5rem; right: 4rem; max-width: 320px; background: rgba(255,255,255,0.10); border: 1.5px solid rgba(232,168,48,0.55); border-radius: 12px; padding: 1rem 1.2rem; backdrop-filter: blur(6px); z-index: 10;">
+      <div style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.13em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.35rem;">📋 Important Notice</div>
+      <p style="font-size: 0.85rem; line-height: 1.6; color: rgba(250,246,240,0.92); margin: 0;">
+        If anyone wants to pursue any of the courses then it is recommended to
+        <strong style="color: var(--gold);">create your login credentials with your full name</strong>
+        to get proper recognized certificate.
+      </p>
+    </div>
     <div class="sdg-badge">Learning Hub</div>
     <h1>Expand Your<br><em>Knowledge</em></h1>
     <p>Diploma courses, vocational training, degree programs, and returnship courses — structured learning designed for every stage of a woman's journey.</p>
